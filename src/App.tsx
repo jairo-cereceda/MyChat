@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <div className="h-[100vh] bg-[var(--mc-secondary-color)] flex flex-col gap-3">
+    <div className="h-dvh bg-[var(--mc-secondary-color)] flex flex-col gap-3">
       <MessagesContainer
         messages={messages}
         handleSetMessage={setMessages}
