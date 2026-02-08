@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.png', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'My Chat App',
         short_name: 'ChatApp',
@@ -17,6 +17,8 @@ export default defineConfig({
         theme_color: '#0a0923',
         background_color: '#181737',
         display: 'standalone',
+        start_url: '/MyChat/',
+        scope: '/MyChat/',
         icons: [
           {
             src: 'pwa-192x192.png',
