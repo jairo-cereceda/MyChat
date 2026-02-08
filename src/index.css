@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+:root {
+  --mc-primary-color: #0a0923;
+  --mc-secondary-color: #181737;
+  --mc-detail-color: #497b9d;
+  --mc-detail-hover: #385f79;
+  --mc-text-color: #c5c1e0;
+}
+
+@theme {
+  --font-mc: 'NataSans', sans-serif;
+
+  --font-weight-semibold: 600;
+}
+
+@font-face {
+  font-family: 'NataSans';
+  src: url('/fonts/NataSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'NataSans';
+  src: url('/fonts/NataSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'NataSans';
+  src: url('/fonts/NataSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+}
+
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
