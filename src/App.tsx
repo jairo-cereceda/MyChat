@@ -4,6 +4,11 @@ import MessagesContainer from './components/atoms/messages-container';
 import { useState, useEffect, useMemo } from 'react';
 import Alert from './components/atoms/alert';
 
+interface StorageV2 {
+  version: number;
+  chats: ChatData[];
+}
+
 export interface MessageData {
   id: string;
   text: string;
@@ -21,18 +26,15 @@ export interface ChatData {
 const migrateStorage = (data: unknown): ChatData[] => {
   if (!data) return [];
 
-  if (typeof data === 'object' && !Array.isArray(data)) {
-    const potentialV2 = data as Record<string, unknown>;
-    if (potentialV2.version === 2 && Array.isArray(potentialV2.chats)) {
-      return potentialV2.chats as ChatData[];
-    }
+  const potentialV2 = data as Partial<StorageV2>;
+  if (potentialV2.version === 2 && Array.isArray(potentialV2.chats)) {
+    return potentialV2.chats;
   }
 
   if (Array.isArray(data)) {
     if (data.length === 0) return [];
 
     const firstItem = data[0] as Record<string, unknown>;
-
     const isOldMessage = 'text' in firstItem && !('messages' in firstItem);
 
     if (isOldMessage) {
@@ -46,11 +48,7 @@ const migrateStorage = (data: unknown): ChatData[] => {
       ];
     }
 
-    const isIntermediateChat =
-      'messages' in firstItem && Array.isArray(firstItem.messages);
-    if (isIntermediateChat) {
-      return data as ChatData[];
-    }
+    return data as ChatData[];
   }
 
   return [];
@@ -59,17 +57,18 @@ const migrateStorage = (data: unknown): ChatData[] => {
 function App() {
   const [chats, setChats] = useState<ChatData[]>(() => {
     try {
-      let savedData = localStorage.getItem('chats');
-      if (!savedData) {
-        savedData = localStorage.getItem('messages');
+      const v2Saved = localStorage.getItem('chats');
+      if (v2Saved) {
+        return migrateStorage(JSON.parse(v2Saved));
       }
 
-      if (!savedData) return [];
+      const v1Saved = localStorage.getItem('messages');
+      if (v1Saved) {
+        const migratedData = migrateStorage(JSON.parse(v1Saved));
+        return migratedData;
+      }
 
-      const parsedData: unknown = JSON.parse(savedData);
-      const migrated = migrateStorage(parsedData);
-
-      return migrated;
+      return [];
     } catch (err) {
       console.error('Error cargando localStorage', err);
       return [];
