@@ -1,0 +1,38 @@
+@layer components {
+  .menu-popover {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 250px;
+    height: 100dvh;
+
+    translate: -100% 0;
+    transition:
+      translate 0.3s allow-discrete,
+      display 0.3s allow-discrete,
+      overlay 0.3s allow-discrete;
+
+    &:popover-open {
+      translate: 0 0;
+
+      @starting-style {
+        translate: -100% 0;
+      }
+    }
+
+    &::backdrop {
+      opacity: 0;
+      transition:
+        opacity 0.3s allow-discrete,
+        display 0.3s allow-discrete,
+        overlay 0.3s allow-discrete;
+    }
+
+    &:popover-open::backdrop {
+      opacity: 1;
+      @starting-style {
+        opacity: 0;
+      }
+    }
+  }
+}

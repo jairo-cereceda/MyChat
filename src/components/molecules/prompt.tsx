@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Submit from '../../atoms/submit';
-import Input from '../../atoms/input';
-import type { MessageData } from '../../../App';
+import Submit from '../atoms/submit';
+import Input from '../atoms/input';
+import type { MessageData } from '../../App';
 
 interface PromptProps {
   onSendMessage: (text: string) => void;
@@ -36,7 +36,7 @@ function Prompt({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-2 items-end p-3 pt-4 bg-[var(--mc-primary-color)] rounded-t-3xl"
+      className="flex gap-2 items-end p-3 pt-4 bg-primary rounded-t-3xl"
     >
       <Input value={inputValue} onChange={setInputValue} />
       <Submit disabled={!inputValue.trim()} />

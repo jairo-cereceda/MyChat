@@ -5,22 +5,17 @@ import { type MessageData } from '../../App';
 
 interface MessagesContainerProps {
   messages: MessageData[];
-  handleSetMessage: React.Dispatch<React.SetStateAction<MessageData[]>>;
+  onDeleteMessage: (id: string) => void;
   onEditClick: (msg: MessageData) => void;
 }
 
 function MessagesContainer({
   messages,
-  handleSetMessage,
+  onDeleteMessage,
   onEditClick,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [openMenuId, setOpenMenuId] = useState('');
-
-  const deleteMessage = (id: string) => {
-    const updatedMessages = messages.filter((msg) => msg.id !== id);
-    handleSetMessage(updatedMessages);
-  };
 
   useEffect(() => {
     const el = containerRef.current;
@@ -32,7 +27,7 @@ function MessagesContainer({
   return (
     <div
       ref={containerRef}
-      className="flex-1 min-h-[100px] p-3 h-full flex gap-2 flex-col items-end overflow-y-auto"
+      className="flex-1 min-h-25 p-3 h-full flex gap-2 flex-col items-end overflow-y-auto"
     >
       {messages.map(({ id, text, timestamp }, index) => (
         <div key={id} className="flex gap-2 flex-col items-end w-full">
@@ -46,8 +41,8 @@ function MessagesContainer({
             timestamp={timestamp.substring(11, 16)}
             isMenuOpen={openMenuId}
             onOpenMenu={() => setOpenMenuId(id)}
-            onCloseMenu={() => setOpenMenuId('')}
-            onDelete={deleteMessage}
+            onCloseMenu={() => setOpenMenuId(id)}
+            onDelete={() => onDeleteMessage(id)}
             onEdit={() => onEditClick({ id, text, timestamp })}
           />
         </div>

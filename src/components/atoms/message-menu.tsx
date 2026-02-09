@@ -13,19 +13,19 @@ const MessageMenu: React.FC<ContextMenuProps> = ({ id, onDelete, onEdit }) => {
   };
 
   return (
-    <div className="absolute right-0 z-10 flex text-[var(--mc-text-color)] flex-col rounded-2xl bg-[var(--mc-detail-color)]">
+    <div className="absolute right-0 z-10 flex text-text-color flex-col rounded-2xl bg-detail">
       <button
         onClick={(e) => {
           e.stopPropagation();
           onEdit();
         }}
-        className="px-4 py-2 hover:bg-[var(--mc-detail-hover)] rounded-t-2xl"
+        className="px-4 py-2 hover:bg-detail-hover rounded-t-2xl"
       >
         <BiSolidPencil />
       </button>
       <button
         onClick={handleDelete}
-        className="px-4 py-2 hover:bg-[var(--mc-detail-hover)] rounded-b-2xl"
+        className="px-4 py-2 hover:bg-detail-hover rounded-b-2xl"
       >
         <MdDelete />
       </button>

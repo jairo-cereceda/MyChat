@@ -42,7 +42,7 @@ const Message: React.FC<MessageProps> = ({
           e.stopPropagation();
           onOpenMenu();
         }}
-        className="break-words text-[var(--mc-text-color)] rounded-3xl p-3 font-mc bg-[var(--mc-primary-color)] flex flex-col gap-1 max-w-[90%]"
+        className="wrap-break-word text-text-color rounded-3xl p-3 font-mc bg-primary flex flex-col gap-1 max-w-[90%]"
       >
         {text}
         <span className="text-xs self-end">{timestamp}</span>
