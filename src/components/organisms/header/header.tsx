@@ -21,7 +21,7 @@ function Header({
       <div className="py-2 ml-2">
         <button
           popoverTarget="record"
-          className="text-text-color p-2 rounded-lg hover:bg-secondary"
+          className="text-text-color p-2 rounded-lg hover:bg-secondary active:bg-secondary"
         >
           <IoMdMenu size={30} />
         </button>

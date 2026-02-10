@@ -42,7 +42,7 @@ const Message: React.FC<MessageProps> = ({
           e.stopPropagation();
           onOpenMenu();
         }}
-        className="wrap-break-word text-text-color rounded-3xl p-3 font-mc bg-primary flex flex-col gap-1 max-w-[90%]"
+        className="wrap-break-word text-text-color rounded-3xl p-3 font-mc bg-primary flex flex-col gap-1 max-w-[90%] select-none"
       >
         {text.split('\n').map((line, i) => (
           <span key={i}>
