@@ -27,7 +27,7 @@ function MessagesContainer({
   return (
     <div
       ref={containerRef}
-      className="flex-1 min-h-25 p-3 pt-0 h-full flex gap-2 flex-col items-end overflow-y-auto"
+      className="flex-1 min-h-25 p-3 h-full flex gap-2 flex-col items-end overflow-y-auto"
     >
       {messages.map(({ id, text, timestamp }, index) => (
         <div key={id} className="flex gap-2 flex-col items-end w-full">

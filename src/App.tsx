@@ -209,7 +209,7 @@ function App() {
   };
 
   return (
-    <div className="h-dvh bg-secondary flex flex-col gap-3">
+    <div className="h-dvh bg-secondary flex flex-col">
       {isDeleteModalOpen && (
         <Alert
           text="¿Deseas Eliminar este chat?"
