@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import Message from './message';
-import DateBadge from './date-badge';
+import Message from '../atoms/message';
+import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../App';
 
 interface MessagesContainerProps {
@@ -41,9 +41,12 @@ function MessagesContainer({
             timestamp={timestamp.substring(11, 16)}
             isMenuOpen={openMenuId}
             onOpenMenu={() => setOpenMenuId(id)}
-            onCloseMenu={() => setOpenMenuId(id)}
+            onCloseMenu={() => setOpenMenuId('')}
             onDelete={() => onDeleteMessage(id)}
-            onEdit={() => onEditClick({ id, text, timestamp })}
+            onEdit={() => {
+              onEditClick({ id, text, timestamp });
+              setOpenMenuId('');
+            }}
           />
         </div>
       ))}

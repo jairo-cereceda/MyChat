@@ -1,5 +1,6 @@
 import ChatTile from '../atoms/chat-tile';
 import { type ChatData } from '../../App';
+import { useRef } from 'react';
 
 interface RecordProps {
   chats: ChatData[];
@@ -14,9 +15,15 @@ function Record({
   onCreateChat,
   onSelectChat,
 }: RecordProps) {
+  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const closeRecords = () => {
+    popoverRef.current?.hidePopover();
+  };
+
   return (
     <nav className="p-2 fixed">
       <ul
+        ref={popoverRef}
         className="menu-popover w-[90%] md:max-w-100 flex flex-col divide-y bg-primary border-t-2 border-secondary divide-secondary pr-2"
         popover="auto"
         id="record"
@@ -33,13 +40,18 @@ function Record({
                 }}
                 onClick={() => onSelectChat(chat.id)}
                 onDeleteChat={() => onDeleteChat(chat.id)}
+                onHide={() => closeRecords()}
               />
             </li>
           ) : null
         )}
 
         <li>
-          <ChatTile type="add" onClick={() => onCreateChat()} />
+          <ChatTile
+            type="add"
+            onClick={() => onCreateChat()}
+            onHide={() => closeRecords()}
+          />
         </li>
       </ul>
     </nav>

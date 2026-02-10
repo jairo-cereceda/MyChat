@@ -7,9 +7,11 @@ interface PromptProps {
   onSendMessage: (text: string) => void;
   editingMessage: MessageData | null;
   onUpdateMessage: (text: string) => void;
+  inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 function Prompt({
+  inputRef,
   onSendMessage,
   editingMessage,
   onUpdateMessage,
@@ -38,7 +40,7 @@ function Prompt({
       onSubmit={handleSubmit}
       className="flex gap-2 items-end p-3 pt-4 bg-primary rounded-t-3xl"
     >
-      <Input value={inputValue} onChange={setInputValue} />
+      <Input inputRef={inputRef} value={inputValue} onChange={setInputValue} />
       <Submit disabled={!inputValue.trim()} />
     </form>
   );

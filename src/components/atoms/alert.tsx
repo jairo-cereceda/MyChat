@@ -6,7 +6,11 @@ export interface AlertProps {
 
 function Alert({ text, onConfirm, onCancel }: AlertProps) {
   return (
-    <div className="fixed flex z-100 justify-center items-center w-full h-full bg-backdrop">
+    <div
+      popover="auto"
+      id="alert"
+      className="fixed flex z-100 justify-center items-center w-full h-full bg-backdrop"
+    >
       <div className="rounded-2xl bg-primary text-text-color p-4 flex flex-col gap-3 ">
         <h2 className="font-semibold text-center">{text}</h2>
         <div className="flex justify-between w-full gap-4">

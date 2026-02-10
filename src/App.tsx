@@ -1,7 +1,7 @@
 import Prompt from './components/molecules/prompt';
 import Header from './components/organisms/header/header';
-import MessagesContainer from './components/atoms/messages-container';
-import { useState, useEffect, useMemo } from 'react';
+import MessagesContainer from './components/organisms/messages-container';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import Alert from './components/atoms/alert';
 
 export interface MessageData {
@@ -34,6 +34,7 @@ const migrateStorage = (data: unknown): ChatData[] => {
     const firstItem = data[0] as Record<string, unknown>;
 
     if ('text' in firstItem && !('messages' in firstItem)) {
+      localStorage.removeItem('messages');
       return [
         {
           id: crypto.randomUUID(),
@@ -79,6 +80,7 @@ function App() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idChatToDelete, setIdChatToDelete] = useState<string | null>(null);
   const [messageToEdit, setMessageToEdit] = useState<MessageData | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const activeChat = useMemo(
     () => chats.find((c) => c.id === activeChatId),
@@ -92,6 +94,22 @@ function App() {
     };
     localStorage.setItem('chats', JSON.stringify(dataToSave));
   }, [chats]);
+
+  useEffect(() => {
+    if (messageToEdit) {
+      setTimeout(() => {
+        const el = inputRef.current;
+
+        if (el) {
+          el.focus();
+
+          const length = el.value.length;
+
+          el.setSelectionRange(length, length);
+        }
+      }, 50);
+    }
+  }, [messageToEdit]);
 
   const addNewChat = (messages: MessageData[] | null = null) => {
     const newChat: ChatData = {
@@ -215,6 +233,7 @@ function App() {
         onSendMessage={addNewMessage}
         editingMessage={messageToEdit}
         onUpdateMessage={updateMessage}
+        inputRef={inputRef}
       />
     </div>
   );
