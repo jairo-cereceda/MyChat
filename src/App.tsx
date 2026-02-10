@@ -4,11 +4,6 @@ import MessagesContainer from './components/atoms/messages-container';
 import { useState, useEffect, useMemo } from 'react';
 import Alert from './components/atoms/alert';
 
-interface StorageV2 {
-  version: number;
-  chats: ChatData[];
-}
-
 export interface MessageData {
   id: string;
   text: string;
@@ -26,29 +21,32 @@ export interface ChatData {
 const migrateStorage = (data: unknown): ChatData[] => {
   if (!data) return [];
 
-  const potentialV2 = data as Partial<StorageV2>;
-  if (potentialV2.version === 2 && Array.isArray(potentialV2.chats)) {
-    return potentialV2.chats;
+  if (typeof data === 'object' && !Array.isArray(data) && data !== null) {
+    const obj = data as Record<string, unknown>;
+    if (obj.version === 2 && Array.isArray(obj.chats)) {
+      return obj.chats as ChatData[];
+    }
   }
 
   if (Array.isArray(data)) {
     if (data.length === 0) return [];
 
     const firstItem = data[0] as Record<string, unknown>;
-    const isOldMessage = 'text' in firstItem && !('messages' in firstItem);
 
-    if (isOldMessage) {
+    if ('text' in firstItem && !('messages' in firstItem)) {
       return [
         {
           id: crypto.randomUUID(),
-          name: 'Mensajes Recuperados',
+          name: 'Chat Recuperado',
           messages: data as MessageData[],
           timestamp: new Date().toISOString(),
         },
       ];
     }
 
-    return data as ChatData[];
+    if ('messages' in firstItem) {
+      return data as ChatData[];
+    }
   }
 
   return [];
@@ -57,20 +55,21 @@ const migrateStorage = (data: unknown): ChatData[] => {
 function App() {
   const [chats, setChats] = useState<ChatData[]>(() => {
     try {
-      const v2Saved = localStorage.getItem('chats');
-      if (v2Saved) {
-        return migrateStorage(JSON.parse(v2Saved));
+      const v1Data = localStorage.getItem('messages');
+      if (v1Data) {
+        const parsed = JSON.parse(v1Data);
+        return migrateStorage(parsed);
       }
 
-      const v1Saved = localStorage.getItem('messages');
-      if (v1Saved) {
-        const migratedData = migrateStorage(JSON.parse(v1Saved));
-        return migratedData;
+      const v2Data = localStorage.getItem('chats');
+      if (v2Data) {
+        const parsed = JSON.parse(v2Data);
+        return migrateStorage(parsed);
       }
 
       return [];
     } catch (err) {
-      console.error('Error cargando localStorage', err);
+      console.error('Failed loading localStorage', err);
       return [];
     }
   });
