@@ -1,21 +1,20 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import Message from '../atoms/message';
 import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../App';
 
 interface MessagesContainerProps {
   messages: MessageData[];
-  onDeleteMessage: (id: string) => void;
-  onEditClick: (msg: MessageData) => void;
+  OpenMenuId: string;
+  setOpenMenuId: (id: string) => void;
 }
 
 function MessagesContainer({
   messages,
-  onDeleteMessage,
-  onEditClick,
+  OpenMenuId,
+  setOpenMenuId,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [openMenuId, setOpenMenuId] = useState('');
 
   const prevMessagesCount = useRef(messages.length);
 
@@ -44,17 +43,10 @@ function MessagesContainer({
             <DateBadge timestamp={timestamp.substring(0, 10)} />
           )}
           <Message
-            id={id}
             text={text}
             timestamp={timestamp.substring(11, 16)}
-            isMenuOpen={openMenuId}
             onOpenMenu={() => setOpenMenuId(id)}
-            onCloseMenu={() => setOpenMenuId('')}
-            onDelete={() => onDeleteMessage(id)}
-            onEdit={() => {
-              onEditClick({ id, text, timestamp });
-              setOpenMenuId('');
-            }}
+            openMenuId={id === OpenMenuId ? OpenMenuId : ''}
           />
         </div>
       ))}

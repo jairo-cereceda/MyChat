@@ -90,11 +90,18 @@ function App() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idChatToDelete, setIdChatToDelete] = useState<string | null>(null);
   const [messageToEdit, setMessageToEdit] = useState<MessageData | null>(null);
+  const [openMenuId, setOpenMenuId] = useState('');
+
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const activeChat = useMemo(
     () => chats.find((c) => c.id === activeChatId),
     [chats, activeChatId]
+  );
+
+  const selectedMessage = useMemo(
+    () => activeChat?.messages.find((msg) => msg.id === openMenuId),
+    [activeChat, openMenuId]
   );
 
   useEffect(() => {
@@ -230,13 +237,19 @@ function App() {
       <Header
         onCreateChat={addNewChat}
         onSelectChat={setActiveChatId}
+        onDeleteMessage={onDeleteMessage}
+        onEdit={setMessageToEdit}
         onDeleteChat={onDeleteChat}
+        openMenuId={openMenuId}
+        setOpenMenuId={setOpenMenuId}
         chats={chats}
+        mode={openMenuId !== '' ? 'editing' : ''}
+        selectedMessage={selectedMessage}
       />
       <MessagesContainer
         messages={activeChat?.messages || []}
-        onDeleteMessage={onDeleteMessage}
-        onEditClick={setMessageToEdit}
+        OpenMenuId={openMenuId}
+        setOpenMenuId={setOpenMenuId}
       />
       <Prompt
         key={messageToEdit?.id || 'new'}

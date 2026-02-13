@@ -1,41 +1,20 @@
-import { useEffect } from 'react';
-import MessageMenu from './message-menu';
-
 export interface MessageProps {
-  id: string;
   text: string;
   timestamp: string;
-  isMenuOpen: string;
   onOpenMenu: () => void;
-  onCloseMenu: () => void;
-  onDelete: (id: string) => void;
-  onEdit: () => void;
+  openMenuId: string;
 }
 
 const Message: React.FC<MessageProps> = ({
-  id,
   text,
   timestamp,
-  isMenuOpen,
   onOpenMenu,
-  onCloseMenu,
-  onDelete,
-  onEdit,
+  openMenuId,
 }) => {
-  useEffect(() => {
-    if (isMenuOpen === id) {
-      document.addEventListener('click', onCloseMenu);
-      document.addEventListener('contextmenu', onCloseMenu);
-    }
-
-    return () => {
-      document.removeEventListener('click', onCloseMenu);
-      document.removeEventListener('contextmenu', onCloseMenu);
-    };
-  });
-
   return (
-    <div className="relative flex w-full justify-end">
+    <div
+      className={`flex w-full justify-end ${openMenuId !== '' ? 'bg-detail-backdrop shadow-detail-highlight [clip-path:inset(0_-100vw)]' : ''}`}
+    >
       <p
         onContextMenu={(e) => {
           e.preventDefault();
@@ -52,9 +31,6 @@ const Message: React.FC<MessageProps> = ({
         ))}
         <span className="text-xs self-end">{timestamp}</span>
       </p>
-      {isMenuOpen === id && (
-        <MessageMenu id={id} onDelete={onDelete} onEdit={onEdit} />
-      )}
     </div>
   );
 };
