@@ -40,7 +40,7 @@ const migrateStorage = (data: unknown): ChatData[] => {
           id: crypto.randomUUID(),
           name: 'Chat Recuperado',
           messages: data as MessageData[],
-          timestamp: new Date().toISOString(),
+          timestamp: getLocalTimestamp(),
         },
       ];
     }
@@ -51,6 +51,16 @@ const migrateStorage = (data: unknown): ChatData[] => {
   }
 
   return [];
+};
+
+const getLocalTimestamp = () => {
+  const now = new Date();
+
+  const offset = now.getTimezoneOffset() * 60000;
+  const localIsoTime = new Date(now.getTime() - offset)
+    .toISOString()
+    .slice(0, -1);
+  return localIsoTime;
 };
 
 function App() {
@@ -116,7 +126,7 @@ function App() {
       id: crypto.randomUUID(),
       name: 'prueba',
       messages: messages || [],
-      timestamp: new Date().toISOString(),
+      timestamp: getLocalTimestamp(),
     };
 
     setChats((prev) => [...prev, newChat]);
@@ -127,7 +137,7 @@ function App() {
     const newMessage: MessageData = {
       id: crypto.randomUUID(),
       text,
-      timestamp: new Date().toISOString(),
+      timestamp: getLocalTimestamp(),
     };
 
     if (!activeChatId) {
@@ -135,7 +145,7 @@ function App() {
         id: crypto.randomUUID(),
         messages: [newMessage],
         name: 'prueba',
-        timestamp: new Date().toISOString(),
+        timestamp: getLocalTimestamp(),
       };
 
       setChats((prev) => [...prev, newChat]);
