@@ -17,11 +17,19 @@ function MessagesContainer({
   const containerRef = useRef<HTMLDivElement>(null);
   const [openMenuId, setOpenMenuId] = useState('');
 
+  const prevMessagesCount = useRef(messages.length);
+
   useEffect(() => {
     const el = containerRef.current;
-    if (el) {
+
+    const isNewMessage =
+      prevMessagesCount.current < messages.length ? true : false;
+
+    if (el && isNewMessage) {
       el.scrollTop = el.scrollHeight;
     }
+
+    prevMessagesCount.current = messages.length;
   }, [messages]);
 
   return (
