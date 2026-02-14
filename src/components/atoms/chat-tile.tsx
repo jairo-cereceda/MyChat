@@ -24,7 +24,7 @@ function ChatTile({
           if (onClick) onClick();
           onHide();
         }}
-        className="p-2 flex gap-2 items-center hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 truncate select-none"
+        className="p-2 flex gap-2 items-center hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 truncate no-callout select-none"
       >
         <IoMdAddCircle /> Añadir chat
       </button>
@@ -38,7 +38,7 @@ function ChatTile({
           if (onClick) onClick();
           onHide();
         }}
-        className="p-2 hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 truncate select-none"
+        className="p-2 hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 truncate no-callout select-none"
       >
         {chat?.name ? chat?.name : 'Escribe algo...'}
       </button>
@@ -49,7 +49,7 @@ function ChatTile({
           onDeleteChat?.();
         }}
         popoverTarget="alert"
-        className="absolute z-40 text-text-color right-0 top-[50%] translate-[-50%] p-1 hover:bg-secondary active:bg-secondary rounded-md select-none"
+        className="absolute z-40 text-text-color right-0 top-[50%] translate-[-50%] p-1 hover:bg-secondary active:bg-secondary rounded-md no-callout select-none"
       >
         <MdDelete />
       </button>
