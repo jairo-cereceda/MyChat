@@ -13,10 +13,6 @@
   --color-text-color: #c5c1e0;
 
   --shadow-detail-highlight: 0 0 0 100vw var(--color-detail-backdrop);
-
-  .no-callout {
-    '-webkit-touch-callout': 'none'
-  }
 }
 
 @font-face {
