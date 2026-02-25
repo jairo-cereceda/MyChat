@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import Message from '../atoms/message';
 import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../App';
@@ -16,19 +16,11 @@ function MessagesContainer({
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const prevMessagesCount = useRef(messages.length);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = containerRef.current;
+    if (!el) return;
 
-    const isNewMessage =
-      prevMessagesCount.current < messages.length ? true : false;
-
-    if (el && isNewMessage) {
-      el.scrollTop = el.scrollHeight;
-    }
-
-    prevMessagesCount.current = messages.length;
+    el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   return (
