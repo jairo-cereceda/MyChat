@@ -15,13 +15,14 @@ function MessagesContainer({
   setOpenMenuId,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastMessageId = messages[messages.length - 1]?.id;
 
   useLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     el.scrollTop = el.scrollHeight;
-  }, [messages]);
+  }, [lastMessageId]);
 
   return (
     <div
