@@ -1,10 +1,10 @@
-export interface AlertProps {
+export interface ModalProps {
   text: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-function Alert({ text, onConfirm, onCancel }: AlertProps) {
+function Modal({ text, onConfirm, onCancel }: ModalProps) {
   return (
     <div
       popover="auto"
@@ -32,4 +32,4 @@ function Alert({ text, onConfirm, onCancel }: AlertProps) {
   );
 }
 
-export default Alert;
+export default Modal;

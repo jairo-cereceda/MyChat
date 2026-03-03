@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from 'react';
 import Prompt from './components/molecules/prompt';
 import Header from './components/organisms/header/header';
 import MessagesContainer from './components/organisms/messages-container';
-import Alert from './components/atoms/alert';
+import Modal from './components/atoms/modal';
 import { useAutoFocus } from './hooks/useAutoFocus';
 import { useChat } from './context/useChat';
 
@@ -19,6 +19,7 @@ function App() {
     messageToEdit,
     setMessageToEdit,
     openMenuId,
+    status,
     setOpenMenuId,
   } = useChat();
 
@@ -51,10 +52,14 @@ function App() {
     closeModal();
   };
 
+  const cancelEditing = () => {
+    setMessageToEdit(null);
+  };
+
   return (
     <div className="h-dvh bg-secondary flex flex-col">
       {isDeleteModalOpen && (
-        <Alert
+        <Modal
           text="¿Deseas Eliminar este chat?"
           onConfirm={handleConfirmDeleteChat}
           onCancel={closeModal}
@@ -76,6 +81,9 @@ function App() {
         messages={activeChat?.messages || []}
         openMenuId={openMenuId}
         setOpenMenuId={setOpenMenuId}
+        messageToEdit={messageToEdit}
+        onCancelEditing={cancelEditing}
+        status={status}
       />
       <Prompt
         onSendMessage={addNewMessage}

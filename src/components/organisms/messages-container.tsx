@@ -2,17 +2,24 @@ import { useRef, useLayoutEffect } from 'react';
 import Message from '../atoms/message';
 import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../types';
+import StatusMessage from '../atoms/StatusMessage';
 
 interface MessagesContainerProps {
   messages: MessageData[];
   openMenuId: string;
   setOpenMenuId: (id: string) => void;
+  messageToEdit: MessageData | null;
+  onCancelEditing?: () => void;
+  status: 'editing' | 'edited' | 'deleted' | null;
 }
 
 function MessagesContainer({
   messages,
   openMenuId,
   setOpenMenuId,
+  messageToEdit,
+  onCancelEditing,
+  status,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastMessageId = messages[messages.length - 1]?.id;
@@ -24,11 +31,17 @@ function MessagesContainer({
     el.scrollTop = el.scrollHeight;
   }, [lastMessageId]);
 
+  const currentStatus = messageToEdit ? 'editing' : status;
+
   return (
     <div
       ref={containerRef}
       className="flex-1 min-h-25 p-3 h-full flex gap-2 flex-col items-end overflow-y-auto"
     >
+      {currentStatus && (
+        <StatusMessage type={currentStatus} onCancelEditing={onCancelEditing} />
+      )}
+
       {messages.map(({ id, text, timestamp }, index) => (
         <div key={id} className="flex gap-2 flex-col items-end w-full">
           {timestamp.substring(0, 10) !==

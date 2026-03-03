@@ -4,6 +4,7 @@ import {
   useMemo,
   type ReactNode,
   useCallback,
+  useEffect,
 } from 'react';
 
 import { type MessageData, type ChatData } from '../types';
@@ -14,6 +15,9 @@ interface ChatContextType {
   chats: ChatData[];
   activeChatId: string | null;
   activeChat?: ChatData;
+
+  status: 'editing' | 'edited' | 'deleted' | null;
+  setStatus: (status: 'editing' | 'edited' | 'deleted' | null) => void;
 
   setActiveChatId: (id: string | null) => void;
 
@@ -47,11 +51,24 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [messageToEdit, setMessageToEdit] = useState<MessageData | null>(null);
 
   const [openMenuId, setOpenMenuId] = useState('');
+  const [status, setStatus] = useState<'editing' | 'edited' | 'deleted' | null>(
+    null
+  );
 
   const activeChat = useMemo(
     () => chats.find((c) => c.id === activeChatId),
     [chats, activeChatId]
   );
+
+  useEffect(() => {
+    if (!status) return;
+
+    const timer = setTimeout(() => {
+      setStatus(null);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [status, setStatus]);
 
   /**
    * Create Chat
@@ -136,6 +153,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       );
 
       setMessageToEdit(null);
+      setStatus('edited');
     },
     [activeChatId, setChats]
   );
@@ -157,6 +175,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             : chat
         )
       );
+
+      setStatus('deleted');
     },
     [activeChatId, setChats]
   );
@@ -174,6 +194,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       deleteMessage,
       messageToEdit,
       setMessageToEdit,
+      status,
+      setStatus,
       openMenuId,
       setOpenMenuId,
     }),
@@ -187,6 +209,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       updateMessage,
       deleteMessage,
       messageToEdit,
+      status,
       openMenuId,
     ]
   );
