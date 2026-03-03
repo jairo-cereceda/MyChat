@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import Submit from '../atoms/submit';
 import Input from '../atoms/input';
-import type { MessageData } from '../../App';
+import type { MessageData } from '../../types';
+import { useState, useEffect } from 'react';
 
 interface PromptProps {
   onSendMessage: (text: string) => void;
   editingMessage: MessageData | null;
-  onUpdateMessage: (text: string) => void;
+  onUpdateMessage: (text: string, messageToUpdate: MessageData) => void;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
@@ -16,13 +16,20 @@ function Prompt({
   editingMessage,
   onUpdateMessage,
 }: PromptProps) {
-  const [inputValue, setInputValue] = useState(editingMessage?.text || '');
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setInputValue(editingMessage?.text || '');
+    });
+    return () => clearTimeout(id);
+  }, [editingMessage]);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
     if (editingMessage) {
-      onUpdateMessage(inputValue);
+      onUpdateMessage(inputValue, editingMessage);
     } else {
       onSendMessage(inputValue);
     }

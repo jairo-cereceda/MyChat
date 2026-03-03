@@ -1,5 +1,5 @@
 import ChatTile from '../atoms/chat-tile';
-import { type ChatData } from '../../App';
+import { type ChatData } from '../../types';
 import { useRef } from 'react';
 
 interface RecordProps {

@@ -1,17 +1,17 @@
 import { useRef, useLayoutEffect } from 'react';
 import Message from '../atoms/message';
 import DateBadge from '../atoms/date-badge';
-import { type MessageData } from '../../App';
+import { type MessageData } from '../../types';
 
 interface MessagesContainerProps {
   messages: MessageData[];
-  OpenMenuId: string;
+  openMenuId: string;
   setOpenMenuId: (id: string) => void;
 }
 
 function MessagesContainer({
   messages,
-  OpenMenuId,
+  openMenuId,
   setOpenMenuId,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ function MessagesContainer({
             text={text}
             timestamp={timestamp.substring(11, 16)}
             onOpenMenu={() => setOpenMenuId(id)}
-            openMenuId={id === OpenMenuId ? OpenMenuId : ''}
+            openMenuId={id === openMenuId ? openMenuId : ''}
           />
         </div>
       ))}

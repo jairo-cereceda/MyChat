@@ -4,7 +4,7 @@ import { IoMdMenu } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
 import { BiSolidPencil } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
-import { type ChatData, type MessageData } from '../../../App';
+import { type ChatData, type MessageData } from '../../../types';
 import HeaderButton from '../../atoms/header-button';
 
 interface HeaderProps {
