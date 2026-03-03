@@ -70,13 +70,18 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     return () => clearTimeout(timer);
   }, [status, setStatus]);
 
+  const generateId = () =>
+    typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : Math.random().toString(36).substring(2, 10);
+
   /**
    * Create Chat
    */
   const addNewChat = useCallback(
     (messages: MessageData[] | null = null) => {
       const newChat: ChatData = {
-        id: crypto.randomUUID(),
+        id: generateId(),
         name: 'Nuevo Chat',
         messages: messages ?? [],
         timestamp: getLocalTimestamp(),
@@ -104,7 +109,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const addNewMessage = useCallback(
     (text: string) => {
       const newMessage: MessageData = {
-        id: crypto.randomUUID(),
+        id: generateId(),
         text,
         timestamp: getLocalTimestamp(),
       };
@@ -112,7 +117,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       setChats((prevChats) => {
         if (!activeChatId) {
           const newChat: ChatData = {
-            id: crypto.randomUUID(),
+            id: generateId(),
             name: 'Nuevo Chat',
             messages: [newMessage],
             timestamp: getLocalTimestamp(),
