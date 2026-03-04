@@ -1,7 +1,7 @@
 import Submit from '../atoms/submit';
 import Input from '../atoms/input';
 import type { MessageData } from '../../types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface PromptProps {
   onSendMessage: (text: string) => void;
@@ -17,6 +17,7 @@ function Prompt({
   onUpdateMessage,
 }: PromptProps) {
   const [inputValue, setInputValue] = useState('');
+  const isMobile = window.matchMedia('(pointer: coarse)').matches;
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -25,7 +26,7 @@ function Prompt({
     return () => clearTimeout(id);
   }, [editingMessage]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (!inputValue.trim()) return;
 
     if (editingMessage) {
@@ -35,12 +36,30 @@ function Prompt({
     }
 
     setInputValue('');
-  };
+  }, [inputValue, editingMessage, onSendMessage, onUpdateMessage]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleSendMessage();
   };
+
+  useEffect(() => {
+    const textarea = inputRef.current;
+    if (!textarea) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
+        e.preventDefault();
+        handleSendMessage();
+      }
+    };
+
+    textarea.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      textarea.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [inputRef, isMobile, handleSendMessage]);
 
   return (
     <form
