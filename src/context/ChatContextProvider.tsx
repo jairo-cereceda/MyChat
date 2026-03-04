@@ -107,6 +107,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const deleteChat = useCallback(
     (chatId: string) => {
       setChats((prev) => prev.filter((chat) => chat.id !== chatId));
+      setActiveChatId(null);
     },
     [setChats]
   );
@@ -122,25 +123,29 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         timestamp: getLocalTimestamp(),
       };
 
-      setChats((prevChats) => {
-        if (!activeChatId) {
-          const newChat: ChatData = {
-            id: generateId(),
-            name: 'Nuevo Chat',
-            messages: [newMessage],
-            timestamp: getLocalTimestamp(),
-          };
+      if (!activeChatId) {
+        const newChatId = generateId();
 
-          setActiveChatId(newChat.id);
-          return [...prevChats, newChat];
-        }
+        const newChat: ChatData = {
+          id: newChatId,
+          name: 'Nuevo Chat',
+          messages: [newMessage],
+          timestamp: getLocalTimestamp(),
+        };
 
-        return prevChats.map((chat) =>
+        setChats((prev) => [...prev, newChat]);
+        setActiveChatId(newChatId);
+
+        return;
+      }
+
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
           chat.id === activeChatId
             ? { ...chat, messages: [...chat.messages, newMessage] }
             : chat
-        );
-      });
+        )
+      );
     },
     [activeChatId, setChats]
   );
