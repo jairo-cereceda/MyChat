@@ -60,6 +60,14 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     [chats, activeChatId]
   );
 
+  const changeActiveChat = useCallback((id: string | null) => {
+    setMessageToEdit(null);
+    setStatus(null);
+    setOpenMenuId('');
+
+    setActiveChatId(id);
+  }, []);
+
   useEffect(() => {
     if (!status) return;
 
@@ -191,7 +199,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       chats,
       activeChatId,
       activeChat,
-      setActiveChatId,
+      setActiveChatId: changeActiveChat,
       addNewChat,
       deleteChat,
       addNewMessage,
@@ -207,6 +215,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     [
       chats,
       activeChatId,
+      changeActiveChat,
       activeChat,
       addNewChat,
       deleteChat,
