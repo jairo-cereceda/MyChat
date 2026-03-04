@@ -21,7 +21,7 @@ function StatusMessage({ type, onCancelEditing }: StatusMessageProps) {
       </p>
       {type === 'editing' && (
         <button
-          className="rounded-4xl bg-primary text-sm text-text-color grow-0 block p-2  active:bg-detail-hover hover:bg-detail-hover"
+          className="rounded-4xl cursor-pointer bg-primary text-sm text-text-color grow-0 block p-2  active:bg-detail-hover hover:bg-detail-hover"
           onClick={onCancelEditing}
         >
           <RxCross2 />

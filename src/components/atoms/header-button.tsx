@@ -31,7 +31,7 @@ function HeaderButton({
     <button
       onClick={handleClick}
       popoverTarget="record"
-      className="text-text-color p-2 rounded-lg hover:bg-secondary active:bg-secondary"
+      className="text-text-color p-2 rounded-lg cursor-pointer hover:bg-secondary active:bg-secondary"
     >
       <Icon size={30} />
     </button>
