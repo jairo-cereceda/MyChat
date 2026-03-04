@@ -15,7 +15,9 @@ function StatusMessage({ type, onCancelEditing }: StatusMessageProps) {
   if (!type) return null;
 
   return (
-    <div className="fixed flex self-center gap-1 items-center">
+    <div
+      className={`fixed flex self-center gap-1 items-center ${type === 'editing' ? 'bottom-20 xl:bottom-auto' : 'bottom-auto'}`}
+    >
       <p className="text-center py-2 px-4 rounded-2xl bg-primary text-sm text-text-color select-none no-callout">
         {STATUS_TEXT[type]}
       </p>
