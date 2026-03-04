@@ -17,7 +17,7 @@ function Input({ value, onChange, inputRef }: InputProps) {
       placeholder="Mensaje"
       name="message"
       id="message"
-      className=" w-full resize-none rounded-3xl p-2 text-text-color bg-secondary font-mc"
+      className=" w-full resize-none rounded-3xl p-2 text-text-color bg-secondary font-mc scrollbar-custom"
     ></TextareaAutosize>
   );
 }

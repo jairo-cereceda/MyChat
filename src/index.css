@@ -1,16 +1,22 @@
 @import 'tailwindcss';
 
 @theme {
+  /*Fonts*/
   --font-mc: 'NataSans', sans-serif;
   --font-weight-semibold: 600;
 
+  /*Colors*/
   --color-primary: #0a0923;
+
   --color-secondary: #181737;
+
   --color-detail: #497b9d;
   --color-detail-disabled: #6d7f8f;
   --color-detail-hover: #385f79;
   --color-detail-backdrop: #385f7920;
+
   --color-backdrop: rgb(0 0 0 / 20%);
+
   --color-text-color: #c5c1e0;
 
   --shadow-detail-highlight: 0 0 0 100vw var(--color-detail-backdrop);
@@ -33,7 +39,27 @@
 }
 
 @layer utilities {
-  .no-callout {
-    -webkit-touch-callout: none;
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-detail-disabled) transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 }
