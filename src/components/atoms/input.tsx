@@ -8,17 +8,19 @@ interface InputProps {
 
 function Input({ value, onChange, inputRef }: InputProps) {
   return (
-    <TextareaAutosize
-      ref={inputRef}
-      minRows={1}
-      maxRows={5}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder="Mensaje"
-      name="message"
-      id="message"
-      className=" w-full resize-none rounded-3xl p-2 text-text-color bg-secondary font-mc scrollbar-custom"
-    ></TextareaAutosize>
+    <div className="w-full rounded-3xl bg-secondary overflow-hidden ring-offset-background focus-within:ring-1 focus-within:ring-white flex">
+      <TextareaAutosize
+        ref={inputRef}
+        minRows={1}
+        maxRows={5}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Mensaje"
+        name="message"
+        id="message"
+        className="block w-full resize-none p-2 text-text-color font-mc scrollbar-custom"
+      ></TextareaAutosize>
+    </div>
   );
 }
 
