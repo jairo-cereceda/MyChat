@@ -20,6 +20,7 @@
   --color-text-color: #c5c1e0;
 
   --shadow-detail-highlight: 0 0 0 100vw var(--color-detail-backdrop);
+  --shadow-white: 0 0 6px 1px rgba(255, 255, 255, 0.1);
 }
 
 @font-face {

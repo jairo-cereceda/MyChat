@@ -42,12 +42,12 @@ function StatusMessage({
         bottom: isMobile && type === 'editing' ? promptOffset + 52 : undefined,
       }}
     >
-      <p className="text-center py-2 px-4 rounded-2xl bg-primary text-sm text-text-color select-none no-callout">
+      <p className="text-center py-2 px-4 rounded-2xl bg-primary text-sm text-text-color select-none no-callout shadow-white">
         {STATUS_TEXT[type]}
       </p>
       {type === 'editing' && (
         <button
-          className="rounded-4xl cursor-pointer bg-primary text-sm text-text-color grow-0 block p-2  active:bg-detail-hover hover:bg-detail-hover"
+          className="rounded-4xl cursor-pointer shadow-white bg-primary text-sm text-text-color grow-0 block p-2  active:bg-detail-hover hover:bg-detail-hover"
           onClick={onCancelEditing}
         >
           <RxCross2 />
