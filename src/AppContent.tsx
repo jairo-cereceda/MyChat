@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useLayoutEffect } from 'react';
 import Prompt from './components/molecules/prompt';
 import Header from './components/organisms/header/header';
 import MessagesContainer from './components/organisms/messages-container';
@@ -27,6 +27,20 @@ function App() {
   const [idChatToDelete, setIdChatToDelete] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const [promptHeight, setPromptHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!inputRef.current) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      setPromptHeight(entry.contentRect.height);
+    });
+
+    observer.observe(inputRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   useAutoFocus(inputRef, messageToEdit !== null);
 
   const selectedMessage = useMemo(
@@ -84,6 +98,7 @@ function App() {
         messageToEdit={messageToEdit}
         onCancelEditing={cancelEditing}
         status={status}
+        promptOffset={promptHeight}
       />
       <Prompt
         onSendMessage={addNewMessage}

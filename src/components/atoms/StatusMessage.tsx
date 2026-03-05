@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 export interface StatusMessageProps {
   type: 'editing' | 'edited' | 'deleted' | null;
+  promptOffset: number;
   onCancelEditing?: () => void;
 }
 
@@ -11,12 +13,34 @@ const STATUS_TEXT = {
   deleted: 'Mensaje eliminado',
 } as const;
 
-function StatusMessage({ type, onCancelEditing }: StatusMessageProps) {
+function StatusMessage({
+  type,
+  onCancelEditing,
+  promptOffset,
+}: StatusMessageProps) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(max-width: 1023px)').matches
+      : true
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 1023px)');
+
+    const listener = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    media.addEventListener('change', listener);
+
+    return () => media.removeEventListener('change', listener);
+  }, []);
+
   if (!type) return null;
 
   return (
     <div
-      className={`absolute xl:fixed flex self-center gap-1 items-center ${type === 'editing' ? 'bottom-5 xl:bottom-auto' : 'bottom-auto'}`}
+      className={`fixed flex self-center gap-1 items-center`}
+      style={{
+        bottom: isMobile && type === 'editing' ? promptOffset + 52 : undefined,
+      }}
     >
       <p className="text-center py-2 px-4 rounded-2xl bg-primary text-sm text-text-color select-none no-callout">
         {STATUS_TEXT[type]}

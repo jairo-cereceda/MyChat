@@ -11,6 +11,7 @@ interface MessagesContainerProps {
   messageToEdit: MessageData | null;
   onCancelEditing?: () => void;
   status: 'editing' | 'edited' | 'deleted' | null;
+  promptOffset: number;
 }
 
 function MessagesContainer({
@@ -20,6 +21,7 @@ function MessagesContainer({
   messageToEdit,
   onCancelEditing,
   status,
+  promptOffset,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastMessageId = messages[messages.length - 1]?.id;
@@ -36,10 +38,14 @@ function MessagesContainer({
   return (
     <div
       ref={containerRef}
-      className="flex-1 relative min-h-25 p-3 h-full flex gap-2 flex-col items-end overflow-y-auto scrollbar-custom"
+      className="flex-1 min-h-25 p-3 h-full flex gap-2 flex-col items-end overflow-y-auto scrollbar-custom"
     >
       {currentStatus && (
-        <StatusMessage type={currentStatus} onCancelEditing={onCancelEditing} />
+        <StatusMessage
+          type={currentStatus}
+          onCancelEditing={onCancelEditing}
+          promptOffset={promptOffset}
+        />
       )}
 
       {messages.map(({ id, text, timestamp }, index) => (
