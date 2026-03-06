@@ -10,8 +10,16 @@ interface MessagesContainerProps {
   setOpenMenuId: (id: string) => void;
   messageToEdit: MessageData | null;
   onCancelEditing?: () => void;
-  status: 'editing' | 'edited' | 'deleted' | null;
+  status:
+    | 'editing'
+    | 'edited'
+    | 'starred'
+    | 'unstarred'
+    | 'cannotShowStarred'
+    | 'deleted'
+    | null;
   promptOffset: number;
+  isStarredView?: boolean;
 }
 
 function MessagesContainer({
@@ -22,6 +30,7 @@ function MessagesContainer({
   onCancelEditing,
   status,
   promptOffset,
+  isStarredView,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastMessageId = messages[messages.length - 1]?.id;
@@ -31,7 +40,7 @@ function MessagesContainer({
     if (!el) return;
 
     el.scrollTop = el.scrollHeight;
-  }, [lastMessageId]);
+  }, [lastMessageId, isStarredView]);
 
   const currentStatus = messageToEdit ? 'editing' : status;
 

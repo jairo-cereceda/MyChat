@@ -16,10 +16,15 @@ function App() {
     updateMessage,
     deleteMessage,
     deleteChat,
+    starMessage,
+    starredMessages,
+    setIsStarredMessagesOpen,
+    isStarredMessagesOpen,
     messageToEdit,
     setMessageToEdit,
     openMenuId,
     status,
+    setStatus,
     setOpenMenuId,
   } = useChat();
 
@@ -47,6 +52,14 @@ function App() {
     () => activeChat?.messages.find((msg) => msg.id === openMenuId),
     [activeChat, openMenuId]
   );
+
+  const handleOpenStarredMessages = () => {
+    if (starredMessages) {
+      setIsStarredMessagesOpen(!isStarredMessagesOpen);
+    } else {
+      setStatus('cannotShowStarred');
+    }
+  };
 
   const handleOpenDeleteChatModal = (id: string) => {
     setIdChatToDelete(id);
@@ -84,21 +97,29 @@ function App() {
         onSelectChat={setActiveChatId}
         onDeleteMessage={deleteMessage}
         onEdit={setMessageToEdit}
+        onStar={starMessage}
         onDeleteChat={handleOpenDeleteChatModal}
         openMenuId={openMenuId}
         setOpenMenuId={setOpenMenuId}
         chats={chats}
+        onWatchStarred={handleOpenStarredMessages}
         mode={openMenuId !== '' ? 'editing' : ''}
         selectedMessage={selectedMessage}
+        isStarredView={isStarredMessagesOpen}
       />
       <MessagesContainer
-        messages={activeChat?.messages || []}
+        messages={
+          isStarredMessagesOpen
+            ? starredMessages?.messages || []
+            : activeChat?.messages || []
+        }
         openMenuId={openMenuId}
         setOpenMenuId={setOpenMenuId}
         messageToEdit={messageToEdit}
         onCancelEditing={cancelEditing}
         status={status}
         promptOffset={promptHeight}
+        isStarredView={isStarredMessagesOpen}
       />
       <Prompt
         onSendMessage={addNewMessage}

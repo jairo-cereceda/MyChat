@@ -15,9 +15,29 @@ interface ChatContextType {
   chats: ChatData[];
   activeChatId: string | null;
   activeChat?: ChatData;
+  starredMessages?: ChatData | undefined;
 
-  status: 'editing' | 'edited' | 'deleted' | null;
-  setStatus: (status: 'editing' | 'edited' | 'deleted' | null) => void;
+  isStarredMessagesOpen: boolean;
+  setIsStarredMessagesOpen: (state: boolean) => void;
+
+  status:
+    | 'editing'
+    | 'edited'
+    | 'deleted'
+    | 'starred'
+    | 'unstarred'
+    | 'cannotShowStarred'
+    | null;
+  setStatus: (
+    status:
+      | 'editing'
+      | 'edited'
+      | 'deleted'
+      | 'starred'
+      | 'unstarred'
+      | 'cannotShowStarred'
+      | null
+  ) => void;
 
   setActiveChatId: (id: string | null) => void;
 
@@ -26,6 +46,7 @@ interface ChatContextType {
 
   addNewMessage: (text: string) => void;
   updateMessage: (text: string, message: MessageData) => void;
+  starMessage: (message: MessageData) => void;
   deleteMessage: (messageId: string) => void;
 
   messageToEdit: MessageData | null;
@@ -51,18 +72,42 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   const [messageToEdit, setMessageToEdit] = useState<MessageData | null>(null);
 
   const [openMenuId, setOpenMenuId] = useState('');
-  const [status, setStatus] = useState<'editing' | 'edited' | 'deleted' | null>(
-    null
-  );
+  const [status, setStatus] = useState<
+    | 'editing'
+    | 'edited'
+    | 'deleted'
+    | 'starred'
+    | 'unstarred'
+    | 'cannotShowStarred'
+    | null
+  >(null);
+
+  const [isStarredMessagesOpen, setIsStarredMessagesOpen] = useState(false);
 
   const activeChat = useMemo(
     () => chats.find((c) => c.id === activeChatId),
     [chats, activeChatId]
   );
 
+  const starredMessages = useMemo(() => {
+    const chat = chats.find((c) => c.id === activeChatId);
+
+    if (!chat) return undefined;
+
+    const starred = chat.messages.filter((m) => m.isStarred);
+
+    if (starred.length === 0) return undefined;
+
+    return {
+      ...chat,
+      messages: starred,
+    };
+  }, [chats, activeChatId]);
+
   const changeActiveChat = useCallback((id: string | null) => {
     setMessageToEdit(null);
     setStatus(null);
+    setIsStarredMessagesOpen(false);
     setOpenMenuId('');
 
     setActiveChatId(id);
@@ -120,6 +165,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       const newMessage: MessageData = {
         id: generateId(),
         text,
+        isStarred: false,
         timestamp: getLocalTimestamp(),
       };
 
@@ -199,6 +245,34 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     [activeChatId, setChats]
   );
 
+  /**
+   * Star message
+   */
+
+  const starMessage = useCallback(
+    (message: MessageData) => {
+      if (!activeChatId) return;
+
+      const newIsStarred = !message.isStarred;
+
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === activeChatId
+            ? {
+                ...chat,
+                messages: chat.messages.map((m) =>
+                  m.id === message.id ? { ...m, isStarred: newIsStarred } : m
+                ),
+              }
+            : chat
+        )
+      );
+
+      setStatus(newIsStarred ? 'starred' : 'unstarred');
+    },
+    [activeChatId, setChats]
+  );
+
   const contextValue = useMemo(
     () => ({
       chats,
@@ -212,6 +286,10 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       deleteMessage,
       messageToEdit,
       setMessageToEdit,
+      starMessage,
+      starredMessages,
+      setIsStarredMessagesOpen,
+      isStarredMessagesOpen,
       status,
       setStatus,
       openMenuId,
@@ -227,8 +305,13 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       addNewMessage,
       updateMessage,
       deleteMessage,
+      starMessage,
+      starredMessages,
+      setIsStarredMessagesOpen,
+      isStarredMessagesOpen,
       messageToEdit,
       status,
+      setStatus,
       openMenuId,
     ]
   );

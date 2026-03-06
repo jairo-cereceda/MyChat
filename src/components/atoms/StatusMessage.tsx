@@ -2,7 +2,14 @@ import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
 export interface StatusMessageProps {
-  type: 'editing' | 'edited' | 'deleted' | null;
+  type:
+    | 'editing'
+    | 'edited'
+    | 'deleted'
+    | 'starred'
+    | 'unstarred'
+    | 'cannotShowStarred'
+    | null;
   promptOffset: number;
   onCancelEditing?: () => void;
 }
@@ -11,6 +18,9 @@ const STATUS_TEXT = {
   editing: 'Editando',
   edited: 'Mensaje editado',
   deleted: 'Mensaje eliminado',
+  starred: 'Mensaje destacado',
+  unstarred: 'Mensaje destacado eliminado',
+  cannotShowStarred: 'No hay destacados',
 } as const;
 
 function StatusMessage({
