@@ -44,12 +44,15 @@ const Message: React.FC<MessageProps> = ({
         onTouchCancel={cancelPressTimer}
         className="wrap-break-word text-text-color rounded-3xl p-3 font-mc bg-primary flex flex-col gap-1 max-w-[90%] select-none no-callout"
       >
-        {text.split('\n').map((line, i) => (
-          <span key={i}>
-            {line}
-            <br />
-          </span>
-        ))}
+        {text
+          .trim()
+          .split('\n')
+          .map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
         <span className="text-xs self-end">{timestamp}</span>
       </p>
     </div>
