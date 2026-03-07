@@ -15,6 +15,7 @@ interface ChatContextType {
   chats: ChatData[];
   activeChatId: string | null;
   activeChat?: ChatData;
+  refreshChats: () => void;
   starredMessages?: ChatData | undefined;
 
   isStarredMessagesOpen: boolean;
@@ -63,7 +64,7 @@ interface ChatProviderProps {
 }
 
 export const ChatProvider = ({ children }: ChatProviderProps) => {
-  const [chats, setChats] = useChatPersistence();
+  const [chats, setChats, refreshChats] = useChatPersistence();
 
   const [activeChatId, setActiveChatId] = useState<string | null>(() => {
     return chats.length > 0 ? chats[0].id : null;
@@ -278,6 +279,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       chats,
       activeChatId,
       activeChat,
+      refreshChats,
       setActiveChatId: changeActiveChat,
       addNewChat,
       deleteChat,
@@ -300,6 +302,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       activeChatId,
       changeActiveChat,
       activeChat,
+      refreshChats,
       addNewChat,
       deleteChat,
       addNewMessage,

@@ -7,6 +7,7 @@ interface RecordProps {
   onCreateChat: () => void;
   onSelectChat: (id: string) => void;
   onDeleteChat: (id: string) => void;
+  onImportExport: () => void;
 }
 
 function Record({
@@ -14,6 +15,7 @@ function Record({
   onDeleteChat,
   onCreateChat,
   onSelectChat,
+  onImportExport,
 }: RecordProps) {
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const closeRecords = () => {
@@ -24,7 +26,7 @@ function Record({
     <nav className="p-2 fixed">
       <ul
         ref={popoverRef}
-        className="menu-popover w-[90%] md:max-w-100 flex flex-col divide-y bg-primary border-t-2 border-secondary divide-secondary pr-2"
+        className="h-full menu-popover w-[90%] md:max-w-100 flex flex-col divide-y bg-primary border-t-2 border-secondary divide-secondary pr-2"
         popover="auto"
         id="record"
       >
@@ -50,6 +52,16 @@ function Record({
           <ChatTile
             type="add"
             onClick={() => onCreateChat()}
+            onHide={() => closeRecords()}
+          />
+        </li>
+
+        <li className="grow" aria-hidden="true"></li>
+
+        <li>
+          <ChatTile
+            type="export-import"
+            onClick={() => onImportExport()}
             onHide={() => closeRecords()}
           />
         </li>

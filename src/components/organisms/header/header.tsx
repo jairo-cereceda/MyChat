@@ -14,6 +14,7 @@ interface HeaderProps {
   onCreateChat: () => void;
   onSelectChat: (id: string) => void;
   onDeleteChat: (id: string) => void;
+  onImportExport: () => void;
   onDeleteMessage: (id: string) => void;
   onEdit: (msg: MessageData) => void;
   onStar: (msg: MessageData) => void;
@@ -31,6 +32,7 @@ function Header({
   onDeleteChat,
   onSelectChat,
   onDeleteMessage,
+  onImportExport,
   onEdit,
   onStar,
   onWatchStarred,
@@ -97,6 +99,7 @@ function Header({
             <Record
               chats={chats}
               onDeleteChat={onDeleteChat}
+              onImportExport={onImportExport}
               onCreateChat={onCreateChat}
               onSelectChat={onSelectChat}
             />

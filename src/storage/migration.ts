@@ -1,5 +1,5 @@
 import { type ChatData, type MessageData } from '../types';
-import { getLocalTimestamp } from './timestamp';
+import { getLocalTimestamp } from '../utils/timestamp';
 
 export const migrateStorage = (data: unknown): ChatData[] => {
   if (!data) return [];

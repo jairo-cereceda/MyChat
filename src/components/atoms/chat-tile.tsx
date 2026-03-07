@@ -1,6 +1,7 @@
 import { IoMdAddCircle } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
 import { type ChatData } from '../../types';
+import { MdImportExport } from 'react-icons/md';
 
 export interface ChatTileProps {
   type?: string;
@@ -27,6 +28,20 @@ function ChatTile({
         className="p-2 flex gap-2 items-center hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 cursor-pointer truncate no-callout select-none"
       >
         <IoMdAddCircle /> Añadir chat
+      </button>
+    );
+  }
+
+  if (type === 'export-import') {
+    return (
+      <button
+        onClick={() => {
+          if (onClick) onClick();
+        }}
+        popoverTarget="alert"
+        className="p-2 flex gap-2 items-center hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 cursor-pointer truncate no-callout select-none"
+      >
+        <MdImportExport /> Exportar/Importar Chats
       </button>
     );
   }
