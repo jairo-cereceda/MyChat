@@ -61,7 +61,7 @@ function App() {
   );
 
   const handleOpenStarredMessages = () => {
-    if (starredMessages) {
+    if (starredMessages || isStarredMessagesOpen) {
       setIsStarredMessagesOpen(!isStarredMessagesOpen);
     } else {
       setStatus('cannotShowStarred');
