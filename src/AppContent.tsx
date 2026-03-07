@@ -88,8 +88,14 @@ function App() {
       {isDeleteModalOpen && (
         <Modal
           text="¿Deseas Eliminar este chat?"
-          onConfirm={handleConfirmDeleteChat}
-          onCancel={closeModal}
+          buttons={[
+            { text: 'Cancelar', onClick: closeModal, variant: 'primary' },
+            {
+              text: 'Aceptar',
+              onClick: handleConfirmDeleteChat,
+              variant: 'primary',
+            },
+          ]}
         />
       )}
       <Header
