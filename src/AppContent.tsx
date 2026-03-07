@@ -121,7 +121,7 @@ function App() {
         promptOffset={promptHeight}
         isStarredView={isStarredMessagesOpen}
       />
-      {isStarredMessagesOpen ? (
+      {!isStarredMessagesOpen ? (
         <Prompt
           onSendMessage={addNewMessage}
           editingMessage={messageToEdit}
