@@ -1,8 +1,10 @@
 import { useRef } from 'react';
+import { RiStarFill } from 'react-icons/ri';
 
 export interface MessageProps {
   text: string;
   timestamp: string;
+  isStarred?: boolean;
   onOpenMenu: () => void;
   openMenuId: string;
 }
@@ -10,6 +12,7 @@ export interface MessageProps {
 const Message: React.FC<MessageProps> = ({
   text,
   timestamp,
+  isStarred,
   onOpenMenu,
   openMenuId,
 }) => {
@@ -53,7 +56,10 @@ const Message: React.FC<MessageProps> = ({
               <br />
             </span>
           ))}
-        <span className="text-xs self-end">{timestamp}</span>
+        <span className="text-xs self-end flex items-center gap-1">
+          {isStarred ? <RiStarFill /> : null}
+          {timestamp}
+        </span>
       </p>
     </div>
   );

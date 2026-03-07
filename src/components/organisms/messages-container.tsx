@@ -57,7 +57,7 @@ function MessagesContainer({
         />
       )}
 
-      {messages.map(({ id, text, timestamp }, index) => (
+      {messages.map(({ id, text, isStarred, timestamp }, index) => (
         <div key={id} className="flex gap-2 flex-col items-end w-full">
           {timestamp.substring(0, 10) !==
             messages[index - 1]?.timestamp.substring(0, 10) && (
@@ -66,6 +66,7 @@ function MessagesContainer({
           <Message
             text={text}
             timestamp={timestamp.substring(11, 16)}
+            isStarred={isStarred}
             onOpenMenu={() => setOpenMenuId(id)}
             openMenuId={id === openMenuId ? openMenuId : ''}
           />
