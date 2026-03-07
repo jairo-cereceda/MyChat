@@ -38,7 +38,7 @@ function ChatTile({
           if (onClick) onClick();
           onHide();
         }}
-        className="p-2 hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold cursor-pointer rounded-md m-1 truncate no-callout select-none"
+        className="p-2 pr-10 hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold cursor-pointer rounded-md m-1 truncate no-callout select-none"
       >
         {chat?.name ? chat?.name : 'Escribe algo...'}
       </button>
