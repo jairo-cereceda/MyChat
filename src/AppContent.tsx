@@ -37,10 +37,13 @@ function App() {
     null
   );
   const [idChatToDelete, setIdChatToDelete] = useState<string | null>(null);
+  const [menuTriggerRef, setMenuTriggerRef] = useState<HTMLElement | null>(
+    null
+  );
+  const [promptHeight, setPromptHeight] = useState(0);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [promptHeight, setPromptHeight] = useState(0);
 
   useLayoutEffect(() => {
     if (!inputRef.current) return;
@@ -191,6 +194,7 @@ function App() {
         onWatchStarred={handleOpenStarredMessages}
         mode={openMenuId !== '' ? 'editing' : ''}
         selectedMessage={selectedMessage}
+        menuTriggerRef={menuTriggerRef}
         isStarredView={isStarredMessagesOpen}
       />
       <main className="contents">
@@ -205,6 +209,7 @@ function App() {
           messageToEdit={messageToEdit}
           onCancelEditing={cancelEditing}
           status={status}
+          setMenuTriggerRef={setMenuTriggerRef}
           promptOffset={promptHeight}
           isStarredView={isStarredMessagesOpen}
         />

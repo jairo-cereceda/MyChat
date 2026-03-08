@@ -9,6 +9,7 @@ import { RiStarOffLine } from 'react-icons/ri';
 import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { type ChatData, type MessageData } from '../../../types';
 import HeaderButton from '../../atoms/header-button';
+import { useEffect, useRef } from 'react';
 
 interface HeaderProps {
   onCreateChat: () => void;
@@ -26,6 +27,7 @@ interface HeaderProps {
   setOpenMenuId: (id: string) => void;
   selectedMessage: MessageData | undefined;
   isStarredView: boolean;
+  menuTriggerRef: HTMLElement | null;
 }
 
 function Header({
@@ -44,13 +46,36 @@ function Header({
   openMenuId,
   setOpenMenuId,
   selectedMessage,
+  menuTriggerRef,
 }: HeaderProps) {
+  const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (openMenuId && firstMenuItemRef.current) {
+      firstMenuItemRef.current.focus();
+    }
+  }, [openMenuId]);
+
+  const handleCloseMenu = () => {
+    setOpenMenuId('');
+    menuTriggerRef?.focus();
+  };
+
   return (
     <header className="bg-primary sticky z-30 w-full">
       <div className="py-2 mx-2">
         {mode === 'editing' ? (
-          <div className="flex justify-center gap-2">
+          <div
+            className="flex justify-center gap-2"
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                e.preventDefault();
+                handleCloseMenu();
+              }
+            }}
+          >
             <HeaderButton
+              ref={firstMenuItemRef}
               icon={MdDelete}
               ariaLabel="Eliminar mensaje"
               onDelete={() => {
@@ -90,7 +115,7 @@ function Header({
               icon={RxCross2}
               ariaLabel="Cerrar menú de mensaje"
               onClose={() => {
-                setOpenMenuId('');
+                handleCloseMenu();
               }}
             />
           </div>

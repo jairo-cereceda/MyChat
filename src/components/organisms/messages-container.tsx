@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useCallback } from 'react';
 import Message from '../atoms/message';
 import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../types';
@@ -8,6 +8,7 @@ interface MessagesContainerProps {
   messages: MessageData[];
   openMenuId: string;
   setOpenMenuId: (id: string) => void;
+  setMenuTriggerRef: (message: HTMLElement | null) => void;
   messageToEdit: MessageData | null;
   onCancelEditing?: () => void;
   status:
@@ -33,6 +34,7 @@ function MessagesContainer({
   status,
   promptOffset,
   isStarredView,
+  setMenuTriggerRef,
 }: MessagesContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastMessageId = messages[messages.length - 1]?.id;
@@ -45,6 +47,14 @@ function MessagesContainer({
   }, [lastMessageId, isStarredView]);
 
   const currentStatus = messageToEdit ? 'editing' : status;
+
+  const handleOpenMenu = useCallback(
+    (id: string, ref: HTMLParagraphElement | null) => {
+      setOpenMenuId(id);
+      setMenuTriggerRef(ref);
+    },
+    [setOpenMenuId, setMenuTriggerRef]
+  );
 
   return (
     <div
@@ -69,7 +79,9 @@ function MessagesContainer({
             text={text}
             timestamp={timestamp.substring(11, 16)}
             isStarred={isStarred}
-            onOpenMenu={() => setOpenMenuId(id)}
+            onOpenMenu={(e) => {
+              handleOpenMenu(id, e.target as HTMLParagraphElement);
+            }}
             openMenuId={id === openMenuId ? openMenuId : ''}
           />
         </div>
