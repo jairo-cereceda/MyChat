@@ -187,32 +187,34 @@ function App() {
         selectedMessage={selectedMessage}
         isStarredView={isStarredMessagesOpen}
       />
-      <MessagesContainer
-        messages={
-          isStarredMessagesOpen
-            ? starredMessages?.messages || []
-            : activeChat?.messages || []
-        }
-        openMenuId={openMenuId}
-        setOpenMenuId={setOpenMenuId}
-        messageToEdit={messageToEdit}
-        onCancelEditing={cancelEditing}
-        status={status}
-        promptOffset={promptHeight}
-        isStarredView={isStarredMessagesOpen}
-      />
-      {!isStarredMessagesOpen ? (
-        <Prompt
-          onSendMessage={addNewMessage}
-          editingMessage={messageToEdit}
-          onUpdateMessage={updateMessage}
-          inputRef={inputRef}
+      <main className="contents">
+        <MessagesContainer
+          messages={
+            isStarredMessagesOpen
+              ? starredMessages?.messages || []
+              : activeChat?.messages || []
+          }
+          openMenuId={openMenuId}
+          setOpenMenuId={setOpenMenuId}
+          messageToEdit={messageToEdit}
+          onCancelEditing={cancelEditing}
+          status={status}
+          promptOffset={promptHeight}
+          isStarredView={isStarredMessagesOpen}
         />
-      ) : (
-        <div className="p-3 py-5 bg-primary rounded-t-3xl text-text-color text-center font-semibold text-lg">
-          Mensajes destacados
-        </div>
-      )}
+        {!isStarredMessagesOpen ? (
+          <Prompt
+            onSendMessage={addNewMessage}
+            editingMessage={messageToEdit}
+            onUpdateMessage={updateMessage}
+            inputRef={inputRef}
+          />
+        ) : (
+          <div className="p-3 py-5 bg-primary rounded-t-3xl text-text-color text-center font-semibold text-lg">
+            Mensajes destacados
+          </div>
+        )}
+      </main>
 
       <input
         type="file"
