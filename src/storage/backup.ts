@@ -51,4 +51,6 @@ export const importChats = async (file: File) => {
   const migrated = migrateStorage(parsed.data);
 
   localStorage.setItem('chats', JSON.stringify(migrated));
+
+  return migrated;
 };

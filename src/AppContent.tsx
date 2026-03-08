@@ -100,6 +100,8 @@ function App() {
       await importChats(file);
       setImportExportError(null);
       refreshChats();
+
+      setActiveChatId(null);
       closeModal();
     } catch (err) {
       console.error(err);
