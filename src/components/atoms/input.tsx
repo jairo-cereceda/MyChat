@@ -9,6 +9,9 @@ interface InputProps {
 function Input({ value, onChange, inputRef }: InputProps) {
   return (
     <div className="w-full rounded-3xl bg-secondary overflow-hidden ring-offset-background focus-within:ring-1 focus-within:ring-white flex">
+      <label htmlFor="message" className="sr-only">
+        Mensaje:
+      </label>
       <TextareaAutosize
         ref={inputRef}
         minRows={1}
