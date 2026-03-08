@@ -171,12 +171,18 @@ function App() {
           ]}
         />
       )}
+      <h1 className="sr-only">
+        {activeChat ? activeChat.messages[0]?.text : 'Comienza tu chat'}
+      </h1>
       <Header
         onCreateChat={addNewChat}
         onSelectChat={setActiveChatId}
         onDeleteMessage={deleteMessage}
         onEdit={setMessageToEdit}
         onStar={starMessage}
+        chatName={
+          activeChat ? activeChat.messages[0]?.text : 'Comienza tu chat'
+        }
         onDeleteChat={handleOpenDeleteChatModal}
         onImportExport={handleOpenImportExportModal}
         openMenuId={openMenuId}

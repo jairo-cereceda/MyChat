@@ -20,6 +20,7 @@ interface HeaderProps {
   onStar: (msg: MessageData) => void;
   onWatchStarred: () => void;
   chats: ChatData[];
+  chatName: string;
   mode?: string;
   openMenuId: string;
   setOpenMenuId: (id: string) => void;
@@ -39,6 +40,7 @@ function Header({
   isStarredView,
   mode,
   chats,
+  chatName,
   openMenuId,
   setOpenMenuId,
   selectedMessage,
@@ -94,12 +96,15 @@ function Header({
           </div>
         ) : (
           <>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center gap-2">
               <HeaderButton
                 ariaLabel="Abrir menú de chats"
                 isPopoverOpener={true}
                 icon={IoMdMenu}
               />
+              <h2 className="text-text-color font-semibold truncate no-callout select-none">
+                {chatName}
+              </h2>
               <HeaderButton
                 ariaLabel={
                   isStarredView
