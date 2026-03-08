@@ -50,6 +50,7 @@ function Header({
           <div className="flex justify-center gap-2">
             <HeaderButton
               icon={MdDelete}
+              ariaLabel="Eliminar mensaje"
               onDelete={() => {
                 onDeleteMessage(openMenuId);
                 setOpenMenuId('');
@@ -57,6 +58,7 @@ function Header({
             />
             <HeaderButton
               icon={BiSolidPencil}
+              ariaLabel="Editar mensaje"
               onEdit={() => {
                 if (selectedMessage) {
                   onEdit(selectedMessage);
@@ -70,6 +72,11 @@ function Header({
                   ? IoStar
                   : IoStarOutline
               }
+              ariaLabel={
+                selectedMessage && selectedMessage.isStarred
+                  ? 'Eliminar mensaje de destacados'
+                  : 'Destacar mensaje'
+              }
               onStar={() => {
                 if (selectedMessage) {
                   onStar(selectedMessage);
@@ -79,6 +86,7 @@ function Header({
             />
             <HeaderButton
               icon={RxCross2}
+              ariaLabel="Cerrar menú de mensaje"
               onClose={() => {
                 setOpenMenuId('');
               }}
@@ -87,8 +95,17 @@ function Header({
         ) : (
           <>
             <div className="flex justify-between">
-              <HeaderButton isPopoverOpener={true} icon={IoMdMenu} />
               <HeaderButton
+                ariaLabel="Abrir menú de chats"
+                isPopoverOpener={true}
+                icon={IoMdMenu}
+              />
+              <HeaderButton
+                ariaLabel={
+                  isStarredView
+                    ? 'Mostrar todos los mensajes del chat'
+                    : 'Mostrar mensajes destacados'
+                }
                 icon={isStarredView ? RiStarOffLine : RiStarFill}
                 onWatchStarred={() => {
                   onWatchStarred();

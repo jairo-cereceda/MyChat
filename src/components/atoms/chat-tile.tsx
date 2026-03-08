@@ -63,6 +63,7 @@ function ChatTile({
           e.stopPropagation();
           onDeleteChat?.();
         }}
+        aria-label={`Eliminar chat ${chat?.name ? chat?.name : 'nuevo chat'}`}
         popoverTarget="alert"
         className="absolute z-40 text-text-color right-0 top-[50%] translate-[-50%] p-1 hover:bg-secondary cursor-pointer active:bg-secondary rounded-md no-callout select-none"
       >

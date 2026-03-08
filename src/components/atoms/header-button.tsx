@@ -2,6 +2,7 @@ import { type IconType } from 'react-icons';
 
 interface HeaderButtonProps {
   icon: IconType;
+  ariaLabel: string;
   onDelete?: () => void;
   onEdit?: () => void;
   onClose?: () => void;
@@ -12,6 +13,7 @@ interface HeaderButtonProps {
 
 function HeaderButton({
   icon: Icon,
+  ariaLabel,
   onDelete,
   onEdit,
   onClose,
@@ -41,6 +43,7 @@ function HeaderButton({
   return (
     <button
       onClick={handleClick}
+      aria-label={ariaLabel}
       popoverTarget={isPopoverOpener ? 'record' : undefined}
       className="text-text-color p-2 rounded-lg cursor-pointer hover:bg-secondary active:bg-secondary"
     >
