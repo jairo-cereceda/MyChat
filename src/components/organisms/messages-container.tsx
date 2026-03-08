@@ -15,6 +15,8 @@ interface MessagesContainerProps {
     | 'edited'
     | 'starred'
     | 'unstarred'
+    | 'imported'
+    | 'exported'
     | 'cannotShowStarred'
     | 'deleted'
     | null;

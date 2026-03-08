@@ -8,9 +8,11 @@ export interface StatusMessageProps {
     | 'deleted'
     | 'starred'
     | 'unstarred'
+    | 'imported'
+    | 'exported'
     | 'cannotShowStarred'
     | null;
-  promptOffset: number;
+  promptOffset?: number;
   onCancelEditing?: () => void;
 }
 
@@ -20,6 +22,8 @@ const STATUS_TEXT = {
   deleted: 'Mensaje eliminado',
   starred: 'Mensaje destacado',
   unstarred: 'Mensaje destacado eliminado',
+  imported: 'Chats importados',
+  exported: 'Chats exportados',
   cannotShowStarred: 'No hay destacados',
 } as const;
 
@@ -49,7 +53,10 @@ function StatusMessage({
     <div
       className={`fixed flex self-center gap-1 items-center`}
       style={{
-        bottom: isMobile && type === 'editing' ? promptOffset + 52 : undefined,
+        bottom:
+          promptOffset && isMobile && type === 'editing'
+            ? promptOffset + 52
+            : undefined,
       }}
     >
       <p className="text-center py-2 px-4 rounded-2xl bg-primary text-sm text-text-color select-none no-callout shadow-white">

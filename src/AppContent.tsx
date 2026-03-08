@@ -6,6 +6,7 @@ import Modal from './components/atoms/modal';
 import { useAutoFocus } from './hooks/useAutoFocus';
 import { useChat } from './context/useChat';
 import { exportChats, importChats } from './storage/backup';
+import StatusMessage from './components/atoms/StatusMessage';
 
 function App() {
   const {
@@ -103,6 +104,12 @@ function App() {
 
       setActiveChatId(null);
       closeModal();
+
+      setStatus('imported');
+
+      setTimeout(() => {
+        setStatus(null);
+      }, 1000);
     } catch (err) {
       console.error(err);
       setImportExportError('Error al importar el backup');
@@ -114,6 +121,12 @@ function App() {
   const handleExport = () => {
     exportChats();
     closeModal();
+
+    setStatus('exported');
+
+    setTimeout(() => {
+      setStatus(null);
+    }, 1000);
   };
 
   const cancelEditing = () => {
@@ -122,6 +135,10 @@ function App() {
 
   return (
     <div className="h-dvh bg-secondary flex flex-col">
+      {(status === 'imported' || status === 'exported') && (
+        <StatusMessage type={status} />
+      )}
+
       {isDeleteModalOpen && (
         <Modal
           text="¿Deseas Eliminar este chat?"

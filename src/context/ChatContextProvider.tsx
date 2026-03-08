@@ -27,6 +27,8 @@ interface ChatContextType {
     | 'deleted'
     | 'starred'
     | 'unstarred'
+    | 'imported'
+    | 'exported'
     | 'cannotShowStarred'
     | null;
   setStatus: (
@@ -36,6 +38,8 @@ interface ChatContextType {
       | 'deleted'
       | 'starred'
       | 'unstarred'
+      | 'imported'
+      | 'exported'
       | 'cannotShowStarred'
       | null
   ) => void;
@@ -79,6 +83,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     | 'deleted'
     | 'starred'
     | 'unstarred'
+    | 'imported'
+    | 'exported'
     | 'cannotShowStarred'
     | null
   >(null);
