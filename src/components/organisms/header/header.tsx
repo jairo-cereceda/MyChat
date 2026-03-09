@@ -28,6 +28,7 @@ interface HeaderProps {
   selectedMessage: MessageData | undefined;
   isStarredView: boolean;
   menuTriggerRef: HTMLElement | null;
+  setMenuTriggerRef: (message: HTMLElement | null) => void;
 }
 
 function Header({
@@ -47,6 +48,7 @@ function Header({
   setOpenMenuId,
   selectedMessage,
   menuTriggerRef,
+  setMenuTriggerRef,
 }: HeaderProps) {
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
 
@@ -157,6 +159,7 @@ function Header({
               onImportExport={onImportExport}
               onCreateChat={onCreateChat}
               onSelectChat={onSelectChat}
+              setMenuTriggerRef={setMenuTriggerRef}
             />
           </>
         )}

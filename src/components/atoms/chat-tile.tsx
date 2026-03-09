@@ -9,6 +9,7 @@ export interface ChatTileProps {
   onClick?: () => void;
   onDeleteChat?: () => void;
   onHide: () => void;
+  setMenuTriggerRef?: (message: HTMLElement | null) => void;
 }
 
 function ChatTile({
@@ -17,6 +18,7 @@ function ChatTile({
   onClick,
   onDeleteChat,
   onHide,
+  setMenuTriggerRef,
 }: ChatTileProps) {
   if (type === 'add') {
     return (
@@ -35,8 +37,10 @@ function ChatTile({
   if (type === 'export-import') {
     return (
       <button
-        onClick={() => {
-          if (onClick) onClick();
+        onClick={(e) => {
+          e.stopPropagation();
+          setMenuTriggerRef?.(e.currentTarget);
+          onClick?.();
         }}
         popoverTarget="alert"
         className="p-2 flex gap-2 items-center hover:bg-secondary active:bg-secondary w-full text-text-color text-start font-semibold rounded-md m-1 cursor-pointer truncate no-callout select-none"
@@ -61,6 +65,7 @@ function ChatTile({
       <button
         onClick={(e) => {
           e.stopPropagation();
+          setMenuTriggerRef?.(e.currentTarget);
           onDeleteChat?.();
         }}
         aria-label={`Eliminar chat ${chat?.name ? chat?.name : 'nuevo chat'}`}

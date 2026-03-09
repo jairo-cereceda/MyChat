@@ -8,6 +8,7 @@ interface RecordProps {
   onSelectChat: (id: string) => void;
   onDeleteChat: (id: string) => void;
   onImportExport: () => void;
+  setMenuTriggerRef: (message: HTMLElement | null) => void;
 }
 
 function Record({
@@ -16,6 +17,7 @@ function Record({
   onCreateChat,
   onSelectChat,
   onImportExport,
+  setMenuTriggerRef,
 }: RecordProps) {
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const closeRecords = () => {
@@ -43,6 +45,7 @@ function Record({
                 onClick={() => onSelectChat(chat.id)}
                 onDeleteChat={() => onDeleteChat(chat.id)}
                 onHide={() => closeRecords()}
+                setMenuTriggerRef={setMenuTriggerRef}
               />
             </li>
           ) : null
@@ -63,6 +66,7 @@ function Record({
             type="export-import"
             onClick={() => onImportExport()}
             onHide={() => closeRecords()}
+            setMenuTriggerRef={setMenuTriggerRef}
           />
         </li>
       </ul>

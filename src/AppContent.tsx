@@ -148,13 +148,15 @@ function App() {
         <Modal
           text="¿Deseas Eliminar este chat?"
           buttons={[
-            { text: 'Cancelar', onClick: closeModal, variant: 'primary' },
+            { text: 'Cancelar', closeOnClick: true, variant: 'primary' },
             {
               text: 'Aceptar',
               onClick: handleConfirmDeleteChat,
               variant: 'primary',
             },
           ]}
+          closeModal={closeModal}
+          menuTriggerRef={menuTriggerRef}
         />
       )}
 
@@ -170,10 +172,12 @@ function App() {
             { text: 'Exportar', onClick: handleExport, variant: 'primary' },
             {
               text: '×',
-              onClick: closeModal,
+              closeOnClick: true,
               variant: 'secondary',
             },
           ]}
+          menuTriggerRef={menuTriggerRef}
+          closeModal={closeModal}
         />
       )}
       <h1 className="sr-only">
@@ -197,6 +201,7 @@ function App() {
         mode={openMenuId !== '' ? 'editing' : ''}
         selectedMessage={selectedMessage}
         menuTriggerRef={menuTriggerRef}
+        setMenuTriggerRef={setMenuTriggerRef}
         isStarredView={isStarredMessagesOpen}
       />
       <main className="contents">

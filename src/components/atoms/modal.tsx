@@ -1,19 +1,101 @@
+import { useCallback, useEffect, useRef } from 'react';
+
 export interface ModalButton {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: 'primary' | 'secondary';
+  closeOnClick?: boolean;
 }
 
 export interface ModalProps {
   text?: string;
   children?: React.ReactNode;
   buttons?: ModalButton[];
-  onCancel?: () => void;
+  closeModal?: () => void;
+  menuTriggerRef: HTMLElement | null;
 }
-function Modal({ text, children, buttons, onCancel }: ModalProps) {
+function Modal({
+  text,
+  children,
+  buttons,
+  closeModal,
+  menuTriggerRef,
+}: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleCloseMenu = useCallback(() => {
+    closeModal?.();
+    menuTriggerRef?.focus();
+  }, [closeModal, menuTriggerRef]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        e.preventDefault();
+        handleCloseMenu();
+      }
+    };
+
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [handleCloseMenu]);
+
+  useEffect(() => {
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    const focusable = Array.from(
+      modal.querySelectorAll<HTMLElement>(
+        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      )
+    );
+
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    modal.addEventListener('keydown', handleKeyDown);
+
+    first.focus();
+
+    return () => {
+      modal.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleButtonClick = (btn: ModalButton) => {
+    btn.onClick?.();
+
+    if (btn.closeOnClick) {
+      handleCloseMenu();
+    }
+  };
+
   return (
     <div
       popover="auto"
+      role="dialog"
+      tabIndex={-1}
+      ref={modalRef}
+      aria-modal="true"
       id="alert"
       className="fixed flex z-100 justify-center items-center w-full h-full bg-backdrop"
     >
@@ -25,7 +107,7 @@ function Modal({ text, children, buttons, onCancel }: ModalProps) {
           {buttons?.map((btn, idx) => (
             <button
               key={idx}
-              onClick={btn.onClick}
+              onClick={() => handleButtonClick(btn)}
               className={`font-semibold cursor-pointer px-5 py-2 rounded-lg ${
                 btn.variant === 'primary'
                   ? 'bg-detail hover:bg-detail-hover active:bg-detail-hover'
@@ -35,15 +117,6 @@ function Modal({ text, children, buttons, onCancel }: ModalProps) {
               {btn.text}
             </button>
           ))}
-
-          {!buttons && onCancel && (
-            <button
-              onClick={onCancel}
-              className="font-semibold cursor-pointer px-5 py-2 rounded-lg bg-detail hover:bg-detail-hover active:bg-detail-hover"
-            >
-              Cancelar
-            </button>
-          )}
         </div>
       </div>
     </div>
