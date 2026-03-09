@@ -4,6 +4,7 @@ import { type IconType } from 'react-icons';
 interface HeaderButtonProps {
   icon: IconType;
   ariaLabel: string;
+  role?: string;
   onDelete?: () => void;
   onEdit?: () => void;
   onClose?: () => void;
@@ -23,6 +24,7 @@ const HeaderButton = React.forwardRef<HTMLButtonElement, HeaderButtonProps>(
       onStar,
       onWatchStarred,
       isPopoverOpener,
+      role,
     },
     ref
   ) => {
@@ -47,6 +49,7 @@ const HeaderButton = React.forwardRef<HTMLButtonElement, HeaderButtonProps>(
 
     return (
       <button
+        role={role}
         ref={ref}
         onClick={handleClick}
         aria-label={ariaLabel}

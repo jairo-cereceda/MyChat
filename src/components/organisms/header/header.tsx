@@ -66,6 +66,7 @@ function Header({
       <div className="py-2 mx-2">
         {mode === 'editing' ? (
           <div
+            role="menu"
             className="flex justify-center gap-2"
             onKeyDown={(e) => {
               if (e.key === 'Escape') {
@@ -78,6 +79,7 @@ function Header({
               ref={firstMenuItemRef}
               icon={MdDelete}
               ariaLabel="Eliminar mensaje"
+              role="menuitem"
               onDelete={() => {
                 onDeleteMessage(openMenuId);
                 setOpenMenuId('');
@@ -86,6 +88,7 @@ function Header({
             <HeaderButton
               icon={BiSolidPencil}
               ariaLabel="Editar mensaje"
+              role="menuitem"
               onEdit={() => {
                 if (selectedMessage) {
                   onEdit(selectedMessage);
@@ -104,6 +107,7 @@ function Header({
                   ? 'Eliminar mensaje de destacados'
                   : 'Destacar mensaje'
               }
+              role="menuitem"
               onStar={() => {
                 if (selectedMessage) {
                   onStar(selectedMessage);
@@ -114,6 +118,7 @@ function Header({
             <HeaderButton
               icon={RxCross2}
               ariaLabel="Cerrar menú de mensaje"
+              role="menuitem"
               onClose={() => {
                 handleCloseMenu();
               }}
@@ -121,7 +126,10 @@ function Header({
           </div>
         ) : (
           <>
-            <div className="flex justify-between items-center gap-2">
+            <div
+              role="menu"
+              className="flex justify-between items-center gap-2"
+            >
               <HeaderButton
                 ariaLabel="Abrir menú de chats"
                 isPopoverOpener={true}
