@@ -8,6 +8,7 @@ interface PromptProps {
   editingMessage: MessageData | null;
   onUpdateMessage: (text: string, messageToUpdate: MessageData) => void;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
+  isDisabled?: boolean;
 }
 
 function Prompt({
@@ -15,6 +16,7 @@ function Prompt({
   onSendMessage,
   editingMessage,
   onUpdateMessage,
+  isDisabled = false,
 }: PromptProps) {
   const [inputValue, setInputValue] = useState('');
   const isMobile = window.matchMedia('(pointer: coarse)').matches;
@@ -64,10 +66,24 @@ function Prompt({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-2 items-end p-3 pt-4 bg-primary rounded-t-3xl"
+      className={`relative flex gap-2 items-end p-3 pt-4 bg-primary rounded-t-3xl`}
     >
-      <Input inputRef={inputRef} value={inputValue} onChange={setInputValue} />
-      <Submit disabled={!inputValue.trim()} />
+      {isDisabled && (
+        <p className="absolute inset-0 flex items-center justify-center text-text-color text-center font-semibold text-lg bg-primary rounded-t-3xl z-10">
+          Mensajes destacados
+        </p>
+      )}
+      <div
+        className={`flex gap-2 items-end w-full ${isDisabled ? 'opacity-0' : ''}`}
+      >
+        <Input
+          inputRef={inputRef}
+          value={inputValue}
+          isDisabled={isDisabled}
+          onChange={setInputValue}
+        />
+        <Submit disabled={isDisabled || !inputValue.trim()} />
+      </div>
     </form>
   );
 }

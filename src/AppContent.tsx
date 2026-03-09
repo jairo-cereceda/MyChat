@@ -42,6 +42,8 @@ function App() {
   );
   const [promptHeight, setPromptHeight] = useState(0);
 
+  const isPromptDisabled = isStarredMessagesOpen && !messageToEdit;
+
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -213,18 +215,14 @@ function App() {
           promptOffset={promptHeight}
           isStarredView={isStarredMessagesOpen}
         />
-        {isStarredMessagesOpen && !messageToEdit ? (
-          <div className="p-3 py-5 bg-primary rounded-t-3xl text-text-color text-center font-semibold text-lg">
-            Mensajes destacados
-          </div>
-        ) : (
-          <Prompt
-            onSendMessage={addNewMessage}
-            editingMessage={messageToEdit}
-            onUpdateMessage={updateMessage}
-            inputRef={inputRef}
-          />
-        )}
+
+        <Prompt
+          onSendMessage={addNewMessage}
+          editingMessage={messageToEdit}
+          onUpdateMessage={updateMessage}
+          inputRef={inputRef}
+          isDisabled={isPromptDisabled}
+        />
       </main>
 
       <input

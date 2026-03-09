@@ -4,9 +4,10 @@ interface InputProps {
   value: string;
   onChange: (value: string) => void;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
+  isDisabled?: boolean;
 }
 
-function Input({ value, onChange, inputRef }: InputProps) {
+function Input({ value, onChange, inputRef, isDisabled }: InputProps) {
   return (
     <div className="w-full rounded-3xl bg-secondary overflow-hidden ring-offset-background focus-within:ring-1 focus-within:ring-white flex">
       <label htmlFor="message" className="sr-only">
@@ -22,6 +23,7 @@ function Input({ value, onChange, inputRef }: InputProps) {
         name="message"
         id="message"
         className="block w-full resize-none p-2 text-text-color font-mc scrollbar-custom"
+        disabled={isDisabled}
       ></TextareaAutosize>
     </div>
   );
