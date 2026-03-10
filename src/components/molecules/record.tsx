@@ -1,6 +1,7 @@
 import ChatTile from '../atoms/chat-tile';
 import { type ChatData } from '../../types';
 import { useEffect, useRef, useState } from 'react';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface RecordProps {
   chats: ChatData[];
@@ -36,6 +37,8 @@ function Record({
     pop.addEventListener('toggle', handleToggle);
     return () => pop.removeEventListener('toggle', handleToggle);
   }, []);
+
+  useFocusTrap(popoverRef);
 
   return (
     <nav className="p-2 fixed">

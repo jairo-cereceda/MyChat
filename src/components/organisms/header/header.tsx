@@ -9,7 +9,8 @@ import { RiStarOffLine } from 'react-icons/ri';
 import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { type ChatData, type MessageData } from '../../../types';
 import HeaderButton from '../../atoms/header-button';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useFocusTrap } from '../../../hooks/useFocusTrap';
 
 interface HeaderProps {
   onCreateChat: () => void;
@@ -50,13 +51,9 @@ function Header({
   menuTriggerRef,
   setMenuTriggerRef,
 }: HeaderProps) {
-  const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
+  const messageMenuRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (openMenuId && firstMenuItemRef.current) {
-      firstMenuItemRef.current.focus();
-    }
-  }, [openMenuId]);
+  useFocusTrap(messageMenuRef, mode === 'editing');
 
   const handleCloseMenu = () => {
     setOpenMenuId('');
@@ -69,6 +66,7 @@ function Header({
         {mode === 'editing' ? (
           <div
             role="menu"
+            ref={messageMenuRef}
             className="flex justify-center gap-2"
             onKeyDown={(e) => {
               if (e.key === 'Escape') {
@@ -78,7 +76,6 @@ function Header({
             }}
           >
             <HeaderButton
-              ref={firstMenuItemRef}
               icon={MdDelete}
               ariaLabel="Eliminar mensaje"
               role="menuitem"

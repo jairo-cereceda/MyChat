@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 
 export function useFocusTrap(
-  containerRef: React.RefObject<HTMLElement | null>
+  containerRef: React.RefObject<HTMLElement | null>,
+  enabled?: boolean
 ) {
   useEffect(() => {
+    if (enabled === false) return;
+
     const container = containerRef.current;
     if (!container) return;
 
@@ -41,5 +44,5 @@ export function useFocusTrap(
     return () => {
       container.removeEventListener('keydown', handleKeyDown);
     };
-  }, [containerRef]);
+  }, [containerRef, enabled]);
 }
