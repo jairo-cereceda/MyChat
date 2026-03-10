@@ -1,6 +1,6 @@
 import ChatTile from '../atoms/chat-tile';
 import { type ChatData } from '../../types';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface RecordProps {
   chats: ChatData[];
@@ -19,10 +19,23 @@ function Record({
   onImportExport,
   setMenuTriggerRef,
 }: RecordProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const closeRecords = () => {
     popoverRef.current?.hidePopover();
   };
+
+  useEffect(() => {
+    const pop = popoverRef.current;
+    if (!pop) return;
+
+    const handleToggle = () => {
+      setIsOpen(pop.matches(':popover-open'));
+    };
+
+    pop.addEventListener('toggle', handleToggle);
+    return () => pop.removeEventListener('toggle', handleToggle);
+  }, []);
 
   return (
     <nav className="p-2 fixed">
@@ -31,6 +44,7 @@ function Record({
         className="h-full menu-popover w-[90%] md:max-w-100 flex flex-col divide-y bg-primary border-t-2 border-secondary divide-secondary pr-2"
         popover="auto"
         id="record"
+        inert={!isOpen ? true : undefined}
       >
         {chats.map((chat) =>
           chat ? (
