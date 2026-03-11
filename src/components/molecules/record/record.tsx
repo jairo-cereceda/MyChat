@@ -1,7 +1,7 @@
-import ChatTile from '../atoms/chat-tile/chat-tile';
-import { type ChatData } from '../../types';
+import ChatTile from '../../atoms/chat-tile/chat-tile';
+import { type ChatData } from '../../../types';
 import { useEffect, useRef, useState } from 'react';
-import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { useFocusTrap } from '../../../hooks/useFocusTrap';
 
 interface RecordProps {
   chats: ChatData[];

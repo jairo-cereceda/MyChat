@@ -1,4 +1,4 @@
-import Record from '../../molecules/record';
+import Record from '../../molecules/record/record';
 import './header.css';
 import { IoMdMenu } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
