@@ -8,7 +8,7 @@ import { RiStarFill } from 'react-icons/ri';
 import { RiStarOffLine } from 'react-icons/ri';
 import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { type ChatData, type MessageData } from '../../../types';
-import HeaderButton from '../../atoms/header-button';
+import HeaderButton from '../../atoms/header-button/header-button';
 import { useRef } from 'react';
 import { useFocusTrap } from '../../../hooks/useFocusTrap';
 
