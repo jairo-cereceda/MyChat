@@ -1,5 +1,5 @@
 import Submit from '../atoms/submit';
-import Input from '../atoms/input';
+import Input from '../atoms/input/input';
 import type { MessageData } from '../../types';
 import { useState, useEffect, useCallback } from 'react';
 
