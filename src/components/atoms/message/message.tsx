@@ -69,7 +69,7 @@ const Message = forwardRef<HTMLParagraphElement, MessageProps>(
               </span>
             ))}
           <span className="text-xs self-end flex items-center gap-1">
-            {isStarred ? <RiStarFill /> : null}
+            {isStarred ? <RiStarFill data-testid="star-icon" /> : null}
             {timestamp}
           </span>
         </p>

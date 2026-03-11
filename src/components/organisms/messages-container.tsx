@@ -1,5 +1,5 @@
 import { useRef, useLayoutEffect, useCallback } from 'react';
-import Message from '../atoms/message';
+import Message from '../atoms/message/message';
 import DateBadge from '../atoms/date-badge';
 import { type MessageData } from '../../types';
 import StatusMessage from '../atoms/StatusMessage';
