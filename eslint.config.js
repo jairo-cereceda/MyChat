@@ -15,7 +15,6 @@ export default defineConfig([
       js.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
-      reactHooks.configs.recommended,
       eslintConfigPrettier,
     ],
     plugins: {
@@ -38,6 +37,7 @@ export default defineConfig([
       },
     },
     rules: {
+      ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
