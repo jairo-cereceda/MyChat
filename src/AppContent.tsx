@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useLayoutEffect } from 'react';
 import Prompt from './components/molecules/prompt/prompt';
 import Header from './components/organisms/header/header';
-import MessagesContainer from './components/organisms/messages-container';
+import MessagesContainer from './components/organisms/messages-container/messages-container';
 import Modal from './components/atoms/modal/modal';
 import { useAutoFocus } from './hooks/useAutoFocus';
 import { useChat } from './context/useChat';
