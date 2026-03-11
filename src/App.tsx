@@ -1,4 +1,4 @@
-import { ChatProvider } from './context/ChatContextProvider';
+import { ChatProvider } from './context/chatContextProvider';
 import AppContent from './AppContent';
 
 function App() {
