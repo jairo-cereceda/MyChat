@@ -146,9 +146,3 @@ This project uses `gh-pages` for deployment to GitHub Pages.
   ```bash
   npm run deploy
   ```
-
----
-
-```
-
-```
