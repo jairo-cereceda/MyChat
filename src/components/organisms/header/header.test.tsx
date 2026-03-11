@@ -8,6 +8,7 @@ import type { ChatData, MessageData } from '../../../types';
  */
 
 vi.mock('../../../hooks/useFocusTrap', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   useFocusTrap: () => {},
 }));
 

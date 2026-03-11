@@ -9,6 +9,7 @@ import type { ReactNode } from 'react';
  */
 
 vi.mock('../../../hooks/useFocusTrap', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   useFocusTrap: () => {},
 }));
 
