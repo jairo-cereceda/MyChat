@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { useFocusTrap } from '../../../hooks/useFocusTrap';
 
 export interface ModalButton {
   text: string;
