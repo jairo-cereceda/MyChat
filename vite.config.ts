@@ -12,7 +12,7 @@ export default defineConfig({
       includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'My Chat App',
-        short_name: 'ChatApp',
+        short_name: 'MyChat',
         description: 'Aplicación de chat con Tailwind 4',
         theme_color: '#0a0923',
         background_color: '#181737',
