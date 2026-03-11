@@ -1,6 +1,6 @@
 import { IoMdAddCircle } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
-import { type ChatData } from '../../types';
+import { type ChatData } from '../../../types';
 import { MdImportExport } from 'react-icons/md';
 
 export interface ChatTileProps {
