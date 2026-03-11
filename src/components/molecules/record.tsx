@@ -1,4 +1,4 @@
-import ChatTile from '../atoms/chat-tile';
+import ChatTile from '../atoms/chat-tile/chat-tile';
 import { type ChatData } from '../../types';
 import { useEffect, useRef, useState } from 'react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
