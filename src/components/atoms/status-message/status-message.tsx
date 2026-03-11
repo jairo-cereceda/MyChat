@@ -16,7 +16,7 @@ export interface StatusMessageProps {
   onCancelEditing?: () => void;
 }
 
-const STATUS_TEXT = {
+export const STATUS_TEXT = {
   editing: 'Editando',
   edited: 'Mensaje editado',
   deleted: 'Mensaje eliminado',

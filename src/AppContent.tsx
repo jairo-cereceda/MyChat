@@ -6,7 +6,7 @@ import Modal from './components/atoms/modal/modal';
 import { useAutoFocus } from './hooks/useAutoFocus';
 import { useChat } from './context/useChat';
 import { exportChats, importChats } from './storage/backup';
-import StatusMessage from './components/atoms/StatusMessage';
+import StatusMessage from './components/atoms/status-message/status-message';
 
 function App() {
   const {
