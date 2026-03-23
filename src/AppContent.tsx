@@ -146,7 +146,7 @@ function App() {
 
       {isDeleteModalOpen && (
         <Modal
-          text="¿Deseas Eliminar este chat?"
+          text="¿Deseas eliminar este chat?"
           buttons={[
             { text: 'Cancelar', closeOnClick: true, variant: 'primary' },
             {
