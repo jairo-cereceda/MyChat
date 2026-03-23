@@ -8,6 +8,7 @@ interface MessagesContainerProps {
   messages: MessageData[];
   openMenuId: string;
   setOpenMenuId: (id: string) => void;
+  setMessageToEdit: (id: MessageData | null) => void;
   setMenuTriggerRef: (message: HTMLElement | null) => void;
   messageToEdit: MessageData | null;
   onCancelEditing?: () => void;
@@ -30,6 +31,7 @@ function MessagesContainer({
   openMenuId,
   setOpenMenuId,
   messageToEdit,
+  setMessageToEdit,
   onCancelEditing,
   status,
   promptOffset,
@@ -51,9 +53,10 @@ function MessagesContainer({
   const handleOpenMenu = useCallback(
     (id: string, ref: HTMLParagraphElement | null) => {
       setOpenMenuId(id);
+      setMessageToEdit(null);
       setMenuTriggerRef(ref);
     },
-    [setOpenMenuId, setMenuTriggerRef]
+    [setOpenMenuId, setMenuTriggerRef, setMessageToEdit]
   );
 
   return (

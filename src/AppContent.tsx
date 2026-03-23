@@ -214,6 +214,7 @@ function App() {
           openMenuId={openMenuId}
           setOpenMenuId={setOpenMenuId}
           messageToEdit={messageToEdit}
+          setMessageToEdit={setMessageToEdit}
           onCancelEditing={cancelEditing}
           status={status}
           setMenuTriggerRef={setMenuTriggerRef}
