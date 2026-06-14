@@ -1,11 +1,14 @@
 import { ChatProvider } from './context/chatContextProvider';
 import AppContent from './AppContent';
+import { DriveProvider } from './context/DriveContext';
 
 function App() {
   return (
-    <ChatProvider>
-      <AppContent />
-    </ChatProvider>
+    <DriveProvider>
+      <ChatProvider>
+        <AppContent />
+      </ChatProvider>
+    </DriveProvider>
   );
 }
 

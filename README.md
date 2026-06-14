@@ -148,4 +148,5 @@ This project uses `gh-pages` for deployment to GitHub Pages.
   ```
 
 ## ✒️ Author
+
 Jairo Cereceda - [GitHub Profile](https://github.com/jairo-cereceda)

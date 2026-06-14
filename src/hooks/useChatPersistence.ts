@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { migrateStorage } from '../storage/migration';
 import type { ChatData } from '../types';
+import { useDrive } from '../context/DriveContext';
 
 const STORAGE_KEYS = {
   CHATS: 'chats',
@@ -34,13 +35,24 @@ export function useChatPersistence() {
     loadChatsFromLocalStorage()
   );
 
+  const { token, syncData } = useDrive();
+
   const refreshChats = useCallback(() => {
     setChats(loadChatsFromLocalStorage());
   }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.CHATS, JSON.stringify(chats));
-  }, [chats]);
+
+    if (token) {
+      const timeoutId = setTimeout(() => {
+        console.log('Iniciando backup automático...');
+        syncData(chats);
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [chats, token, syncData]);
 
   return [chats, setChats, refreshChats] as const;
 }

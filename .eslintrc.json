@@ -10,6 +10,7 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
+  "linebreak-style": "off",
   "plugins": ["react", "react-hooks"],
   "parserOptions": {
     "ecmaFeatures": { "jsx": true },
