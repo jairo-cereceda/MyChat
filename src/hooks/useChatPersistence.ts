@@ -46,8 +46,15 @@ export function useChatPersistence() {
 
     if (token) {
       const timeoutId = setTimeout(() => {
+        const backupData = {
+          app: 'my-chat-app',
+          format: 'chat-backup',
+          exportedAt: new Date().toISOString(),
+          data: chats,
+        };
+
         console.log('Iniciando backup automático...');
-        syncData(chats);
+        syncData(backupData);
       }, 3000);
 
       return () => clearTimeout(timeoutId);
