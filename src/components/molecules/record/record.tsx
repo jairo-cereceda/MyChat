@@ -2,6 +2,7 @@ import ChatTile from '../../atoms/chat-tile/chat-tile';
 import { type ChatData } from '../../../types';
 import { useEffect, useRef, useState } from 'react';
 import { useFocusTrap } from '../../../hooks/useFocusTrap';
+import { SyncSettings } from '../../organisms/SyncSettings/SyncSettings';
 
 interface RecordProps {
   chats: ChatData[];
@@ -85,6 +86,9 @@ function Record({
             onHide={() => closeRecords()}
             setMenuTriggerRef={setMenuTriggerRef}
           />
+        </li>
+        <li>
+          <SyncSettings />
         </li>
       </ul>
     </nav>

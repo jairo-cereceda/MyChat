@@ -11,7 +11,6 @@ import { type ChatData, type MessageData } from '../../../types';
 import HeaderButton from '../../atoms/header-button/header-button';
 import { useRef } from 'react';
 import { useFocusTrap } from '../../../hooks/useFocusTrap';
-import { SyncSettings } from '../SyncSettings/SyncSettings';
 
 interface HeaderProps {
   onCreateChat: () => void;
@@ -162,8 +161,6 @@ function Header({
           </>
         )}
       </div>
-
-      <SyncSettings />
     </header>
   );
 }
